@@ -27,7 +27,7 @@ function CinematicLetter({
   return (
     <span className="inline-block overflow-hidden align-bottom">
       <motion.span
-        className={cn("inline-block", stroke && "text-stroke")}
+        className={cn("inline-block", stroke && "lg:text-stroke")}
         initial={{
           y: "125%",
           opacity: 0,
@@ -66,7 +66,7 @@ export function CinematicName({
 
   return (
     <span className={cn("relative inline-block", className)}>
-      <span className="inline-flex max-w-full flex-wrap items-baseline justify-center gap-x-[0.2em] gap-y-0 lg:flex-nowrap lg:justify-start lg:gap-x-[0.35em] lg:whitespace-nowrap">
+      <span className="inline-flex max-w-full flex-wrap items-baseline justify-center gap-x-[0.18em] gap-y-0 leading-[0.92] lg:flex-nowrap lg:justify-start lg:gap-x-[0.35em] lg:whitespace-nowrap">
         <span aria-hidden="true">
           {firstName.split("").map((char, i) => (
             <CinematicLetter
@@ -95,7 +95,7 @@ export function CinematicName({
         {firstName} {lastName}
       </span>
       <motion.span
-        className="pointer-events-none absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-transparent via-accent/70 to-transparent"
+        className="pointer-events-none absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-transparent via-white/75 to-transparent"
         initial={{ scaleX: 0, opacity: 0 }}
         animate={
           visible

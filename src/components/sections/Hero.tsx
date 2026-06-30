@@ -43,7 +43,9 @@ export function Hero() {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_18%_48%,rgba(255,80,60,0.14)_0%,transparent_60%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_35%_at_88%_25%,rgba(255,59,48,0.07)_0%,transparent_55%)]" />
           </div>
-          <div className="hero-mobile-bg absolute inset-0 lg:hidden" />
+          <div className="hero-mobile-bg absolute inset-0 lg:hidden">
+            <span className="hero-mobile-bg__glow" aria-hidden="true" />
+          </div>
         </div>
 
         <div className="container-grid relative z-10 h-full">
@@ -104,7 +106,7 @@ export function Hero() {
             <div className="hero-copy relative order-2 flex min-h-0 flex-col justify-start pb-1 pt-0 text-center sm:pb-6 sm:pt-2 lg:h-full lg:justify-center lg:py-2 lg:pb-0 lg:pl-6 lg:pt-0 lg:text-left xl:pl-10">
               <div className="flex w-full max-w-2xl flex-col items-center lg:items-start">
                 <motion.p
-                  className="label-caps mb-1.5 text-[0.65rem] text-accent sm:mb-4 sm:text-xs"
+                  className="label-caps mb-1.5 text-[0.65rem] text-primary sm:mb-4 sm:text-xs"
                   initial={false}
                   animate={{ opacity: show ? 1 : 0, y: show ? 0 : 12 }}
                   transition={{ duration: 0.8, delay: show ? 0.25 : 0, ease: EASE.outExpo }}
@@ -120,27 +122,26 @@ export function Hero() {
                   />
                 </h1>
 
-                <motion.p
-                  className="mt-2 max-w-xl text-sm leading-snug text-primary/90 sm:mt-5 sm:text-lg sm:leading-relaxed lg:text-xl"
+                <motion.div
+                  className="hero-quote mx-auto mt-2.5 sm:mt-5 lg:mx-0"
                   initial={false}
                   animate={{ opacity: show ? 1 : 0, y: show ? 0 : 14 }}
                   transition={{ duration: 0.9, delay: show ? 0.95 : 0, ease: EASE.outExpo }}
                 >
-                  {SITE.heroTagline}
-                </motion.p>
+                  {SITE.heroQuote.map((line) => (
+                    <p key={line}>{line}</p>
+                  ))}
+                </motion.div>
 
                 <motion.ul
-                  className="mt-2 flex flex-wrap justify-center gap-1.5 sm:mt-5 sm:gap-2.5 lg:justify-start"
+                  className="hero-highlights mt-3 w-full sm:mt-5 lg:max-w-none"
                   initial={false}
                   animate={{ opacity: show ? 1 : 0, y: show ? 0 : 10 }}
                   transition={{ duration: 0.9, delay: show ? 1.15 : 0, ease: EASE.outExpo }}
                   aria-label="Key credentials"
                 >
                   {SITE.heroHighlights.map((item) => (
-                    <li
-                      key={item}
-                      className="border border-border px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em] text-primary/85 uppercase sm:px-3.5 sm:py-2 sm:text-[11px] sm:tracking-[0.12em]"
-                    >
+                    <li key={item} className="hero-highlight-chip">
                       {item}
                     </li>
                   ))}

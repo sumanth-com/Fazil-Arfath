@@ -10,7 +10,11 @@ export const SITE = {
   tagline:
     "Data-driven strategies that improve visibility, generate quality leads, and deliver measurable growth.",
   heroTagline:
-    "Turning data into growth—one optimized campaign at a time.",
+    "I engineer growth, not vanity metrics. Google Ads, SEO & performance for B2B brands.",
+  heroQuote: [
+    "I engineer growth, not vanity metrics.",
+    "Google Ads, SEO & performance for B2B brands.",
+  ] as const,
   heroHighlights: [
     "8+ Years Experience",
     "56+ Clients",
