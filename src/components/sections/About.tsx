@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SITE, STATS, TOOLS, EASE } from "@/lib/constants";
+import { SITE, STATS, TOOLS, EASE, SECTION_NUMBERS } from "@/lib/constants";
 import { Counter } from "@/components/ui/Counter";
 import { Reveal } from "@/components/ui/Reveal";
 import { StatIcon } from "@/components/ui/StatIcon";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 
 export function About() {
   return (
@@ -16,17 +17,9 @@ export function About() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_80%_20%,rgba(255,59,48,0.05)_0%,transparent_60%)]" aria-hidden="true" />
 
       <div className="container-grid relative z-10 flex h-full min-h-0 flex-col py-5 lg:py-6">
-        <motion.span
-          className="label-caps shrink-0 text-xs text-accent"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.8, ease: EASE.outExpo }}
-        >
-          / About
-        </motion.span>
+        <SectionLabel number={SECTION_NUMBERS.about} />
 
-        <h2 className="section-heading mt-4 mb-6 shrink-0 lg:mb-8">
+        <h2 className="section-heading section-header mb-6 shrink-0 lg:mb-8">
           <span className="section-heading-line">
             <span>{SITE.aboutHeading}</span>
             <span className="text-accent">{SITE.aboutHeadingAccent}</span>
@@ -37,9 +30,9 @@ export function About() {
           <div className="min-w-0 space-y-4">
             <Reveal delay={0.3}>
               <p className="max-w-2xl text-base leading-[1.75] text-secondary lg:text-lg">
-                <span className="text-accent">/</span> I&apos;m{" "}
-                <strong className="text-primary">{SITE.person}</strong> (
-                {SITE.alsoKnownAs}), a {SITE.roleTitle} with{" "}
+                I&apos;m{" "}
+                <strong className="text-primary">{SITE.person}</strong>, a{" "}
+                {SITE.roleTitle} with{" "}
                 <strong className="text-primary">8+ years</strong> helping B2B
                 SaaS and technology companies in India improve online visibility,
                 generate quality leads, and deliver{" "}

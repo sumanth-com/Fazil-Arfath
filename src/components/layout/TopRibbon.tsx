@@ -22,10 +22,10 @@ export function TopRibbon() {
         {items.map((item, i) => (
           <span
             key={`${item}-${i}`}
-            className="flex items-center gap-10 text-[11px] font-bold tracking-[0.2em] text-white uppercase"
+            className="flex items-center gap-10 text-[11px] font-bold tracking-[0.2em] text-black uppercase"
           >
             {item}
-            <span className="h-1 w-1 shrink-0 rounded-full bg-white/70" />
+            <span className="h-1 w-1 shrink-0 rounded-full bg-black/55" />
           </span>
         ))}
       </motion.div>

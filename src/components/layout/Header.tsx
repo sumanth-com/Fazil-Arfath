@@ -36,10 +36,10 @@ export function Header() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: EASE.outExpo, delay: 0.3 }}
       >
-        <div className="container-grid flex items-center justify-between gap-6 py-4 md:py-5">
+        <div className="container-grid relative flex items-center py-4 md:py-5">
           <Link
             href="#"
-            className="logo-text text-lg md:text-xl"
+            className="logo-text relative z-10 shrink-0 text-lg md:text-xl"
             data-cursor="hover"
             aria-label={`${SITE.name} home`}
           >
@@ -47,7 +47,7 @@ export function Header() {
           </Link>
 
           <nav
-            className="hidden items-center gap-10 lg:flex"
+            className="absolute top-1/2 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-8 lg:flex xl:gap-10"
             aria-label="Main navigation"
           >
             {NAV_LINKS.map((link, i) => (
@@ -63,7 +63,7 @@ export function Header() {
               >
                 <Link
                   href={link.href}
-                  className="label-caps text-primary/80 transition-colors duration-300 hover:text-accent"
+                  className="label-caps whitespace-nowrap text-primary/80 transition-colors duration-300 hover:text-accent"
                   data-cursor="hover"
                 >
                   {link.label}
@@ -72,14 +72,14 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="hidden lg:block">
-            <Button href="#contact" variant="outline" size="sm">
-              Let&apos;s Talk
+          <div className="relative z-10 ml-auto hidden shrink-0 lg:block">
+            <Button href="#contact" variant="pill3d" size="sm">
+              {SITE.ctaLabel}
             </Button>
           </div>
 
           <button
-            className="relative z-50 flex h-10 w-10 flex-col items-center justify-center gap-1.5 lg:hidden"
+            className="relative z-10 ml-auto flex h-10 w-10 shrink-0 flex-col items-center justify-center gap-1.5 lg:hidden"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
@@ -129,8 +129,8 @@ export function Header() {
                   </Link>
                 </motion.div>
               ))}
-              <Button href="#contact" onClick={() => setMenuOpen(false)}>
-                Let&apos;s Talk
+              <Button href="#contact" variant="pill3d" onClick={() => setMenuOpen(false)}>
+                {SITE.ctaLabel}
               </Button>
             </nav>
           </motion.div>

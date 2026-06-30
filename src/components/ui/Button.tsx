@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-type ButtonVariant = "primary" | "outline" | "ghost";
+type ButtonVariant = "primary" | "outline" | "ghost" | "pill3d";
 type ButtonSize = "sm" | "md" | "lg";
 
 interface ButtonProps {
@@ -24,6 +24,8 @@ const variants: Record<ButtonVariant, string> = {
     "bg-transparent text-accent border border-accent/60 hover:border-accent hover:bg-accent/5 hover:shadow-[0_0_30px_rgba(255,80,60,0.15)]",
   ghost:
     "bg-transparent text-primary border border-transparent hover:text-accent",
+  pill3d:
+    "btn-pill-3d rounded-full border border-accent/42 bg-transparent text-accent hover:text-accent",
 };
 
 const sizes: Record<ButtonSize, string> = {

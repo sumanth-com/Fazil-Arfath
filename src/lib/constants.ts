@@ -1,5 +1,6 @@
 export const SITE = {
-  name: "FAZIL",
+  name: "Mr. Fazil",
+  ctaLabel: "Let's Connect",
   person: "Mohammed Fazil Arfath",
   personShort: "Fazil",
   alsoKnownAs: "Fazil Arfath",
@@ -35,6 +36,14 @@ export const NAV_LINKS = [
   { label: "Contact", href: "#contact" },
 ] as const;
 
+export const SECTION_NUMBERS = {
+  about: "01",
+  experience: "02",
+  process: "03",
+  services: "04",
+  contact: "05",
+} as const;
+
 export const RIBBON_ITEMS = [
   "Google Ads Certified",
   "Performance marketing",
@@ -61,6 +70,7 @@ export const EXPERIENCE = [
   {
     id: "01",
     company: "Dataplatr",
+    logoKey: "dataplatr",
     role: "Sr. Digital Marketing Specialist",
     period: "2023 – Present",
     category: "B2B SaaS • Performance Marketing",
@@ -70,6 +80,7 @@ export const EXPERIENCE = [
   {
     id: "02",
     company: "TYASuite",
+    logoKey: "tyasuite",
     role: "Digital Marketing Specialist",
     period: "2021 – 2023",
     category: "Google Ads • Meta Ads • SEO",
@@ -79,6 +90,7 @@ export const EXPERIENCE = [
   {
     id: "03",
     company: "iTCart",
+    logoKey: "itcart",
     role: "Performance Marketing Executive",
     period: "2019 – 2021",
     category: "E-Commerce • ROI Focus",
@@ -88,6 +100,7 @@ export const EXPERIENCE = [
   {
     id: "04",
     company: "Upnet",
+    logoKey: "upnet",
     role: "Digital Marketing Executive",
     period: "2017 – 2019",
     category: "Campaigns • SEO • Analytics",

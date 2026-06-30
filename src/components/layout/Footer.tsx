@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { NAV_LINKS, SITE } from "@/lib/constants";
-import { LinkedInIcon3D, MailIcon3D } from "@/components/ui/SocialIcons";
+import { LinkedInIcon3D, WhatsAppIcon3D } from "@/components/ui/SocialIcons";
+
+const WHATSAPP_URL = `https://wa.me/${SITE.phone.replace(/\D/g, "")}`;
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -50,13 +52,15 @@ export function Footer() {
             <LinkedInIcon3D />
           </a>
           <a
-            href={`mailto:${SITE.email}`}
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="contact-channel-icon"
             data-cursor="hover"
-            aria-label="Email"
+            aria-label={`WhatsApp ${SITE.phone}`}
           >
             <span className="contact-channel-icon__shine" aria-hidden="true" />
-            <MailIcon3D />
+            <WhatsAppIcon3D />
           </a>
         </div>
       </div>

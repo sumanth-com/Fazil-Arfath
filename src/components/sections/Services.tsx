@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SERVICES, SERVICES_HIGHLIGHT, EASE } from "@/lib/constants";
+import { SERVICES, SERVICES_HIGHLIGHT, EASE, SECTION_NUMBERS } from "@/lib/constants";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { WordReveal } from "@/components/ui/WordReveal";
 import { Reveal } from "@/components/ui/Reveal";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 
 export function Services() {
   return (
@@ -14,17 +15,9 @@ export function Services() {
       aria-label="Services"
     >
       <div className="container-grid">
-        <motion.span
-          className="label-caps mb-4 block text-xs text-accent"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.8, ease: EASE.outExpo }}
-        >
-          / 05
-        </motion.span>
+        <SectionLabel number={SECTION_NUMBERS.services} />
 
-        <div className="mb-12 flex flex-col gap-3 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
+        <div className="section-header section-header--split mb-12 lg:mb-16">
           <h2 className="section-heading">
             <span className="section-heading-line">
               <span>CORE</span>

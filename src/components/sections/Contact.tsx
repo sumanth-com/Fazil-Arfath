@@ -1,14 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { SITE, HERO_SERVICES, EASE } from "@/lib/constants";
+import { SITE, HERO_SERVICES, EASE, SECTION_NUMBERS } from "@/lib/constants";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { Reveal } from "@/components/ui/Reveal";
-
-import { WhatsAppIcon3D, MailIcon3D } from "@/components/ui/SocialIcons";
-
-const WHATSAPP_URL = `https://wa.me/${SITE.phone.replace(/\D/g, "")}`;
+import { Button } from "@/components/ui/Button";
+import { LocationPinIcon3D } from "@/components/ui/SocialIcons";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 
 export function Contact() {
   return (
@@ -25,29 +24,15 @@ export function Contact() {
       <div className="container-grid relative z-10">
         <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
           <div className="lg:sticky lg:top-[calc(var(--site-chrome)+2rem)]">
-            <motion.span
-              className="label-caps mb-6 block text-accent"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: false }}
-              transition={{ duration: 0.8, ease: EASE.outExpo }}
-            >
-              / Get in Touch
-            </motion.span>
+            <SectionLabel number={SECTION_NUMBERS.contact} />
 
-            <h2 className="contact-heading mb-6">
-              <TextReveal as="span" className="block">
-                LET&apos;S GROW
-              </TextReveal>
-              <motion.span
-                className="heading-serif contact-heading-accent block text-accent"
-                initial={{ opacity: 0, y: 48, filter: "blur(8px)" }}
-                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                viewport={{ once: false }}
-                transition={{ duration: 1, delay: 0.15, ease: EASE.outExpo }}
-              >
-                Together
-              </motion.span>
+            <h2 className="section-heading section-header mb-6">
+              <span className="section-heading-line">
+                <TextReveal as="span" inline>
+                  LET&apos;S GROW
+                </TextReveal>
+                <span className="text-accent">TOGETHER</span>
+              </span>
             </h2>
 
             <Reveal delay={0.25}>
@@ -58,27 +43,15 @@ export function Contact() {
             </Reveal>
 
             <Reveal delay={0.35} className="mt-8 flex flex-wrap items-center gap-5">
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="contact-channel-icon"
-                aria-label={`WhatsApp ${SITE.phone}`}
-                data-cursor="hover"
-              >
-                <span className="contact-channel-icon__shine" aria-hidden="true" />
-                <WhatsAppIcon3D />
-              </a>
-              <a
+              <Button
                 href={`mailto:${SITE.email}`}
-                className="contact-channel-icon"
-                aria-label={`Email ${SITE.email}`}
-                data-cursor="hover"
+                variant="pill3d"
+                size="sm"
               >
-                <span className="contact-channel-icon__shine" aria-hidden="true" />
-                <MailIcon3D />
-              </a>
-              <span className="contact-channel-location label-caps">
+                Email Me
+              </Button>
+              <span className="contact-channel-location label-caps flex items-center gap-2.5">
+                <LocationPinIcon3D />
                 {SITE.location}
               </span>
             </Reveal>
@@ -98,7 +71,9 @@ export function Contact() {
                   ease: EASE.outExpo,
                 }}
               >
-                <span className="contact-offer-number">{item.number}</span>
+                <span className="text-xs font-semibold tabular-nums text-accent">
+                  {item.number}
+                </span>
 
                 <div className="contact-offer-rail" aria-hidden="true">
                   <span className="contact-offer-line" />
@@ -110,7 +85,7 @@ export function Contact() {
                 </div>
 
                 <div className="contact-offer-copy">
-                  <h3 className="text-sm font-semibold tracking-[0.14em] text-primary uppercase">
+                  <h3 className="text-sm font-semibold tracking-[0.15em] uppercase">
                     {item.title}
                   </h3>
                   <p className="mt-1.5 text-xs leading-relaxed text-secondary">

@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { PROCESS_STEPS, EASE } from "@/lib/constants";
+import { PROCESS_STEPS, EASE, SECTION_NUMBERS } from "@/lib/constants";
 import { ProcessIcon } from "@/components/ui/ProcessIcon";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 
 const PUZZLE_VARIANTS = [
   "process-puzzle-card--a",
@@ -82,17 +83,9 @@ export function Process() {
       />
 
       <div className="container-grid relative z-10 flex h-full min-h-0 flex-col py-5 lg:py-6">
-        <motion.span
-          className="label-caps shrink-0 text-xs text-accent"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.8, ease: EASE.outExpo }}
-        >
-          / 04
-        </motion.span>
+        <SectionLabel number={SECTION_NUMBERS.process} />
 
-        <div className="mt-4 mb-5 flex shrink-0 flex-col gap-3 lg:mb-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="section-header section-header--split mb-5 shrink-0 lg:mb-6">
           <h2 className="section-heading">
             <span className="section-heading-line">
               <span>MY</span>
@@ -109,6 +102,7 @@ export function Process() {
         <div
           ref={boardRef}
           className="process-puzzle-board relative flex min-h-0 flex-1 items-center justify-center"
+          data-assembled={assembled ? "true" : "false"}
         >
           <motion.div
             className="process-puzzle-seam process-puzzle-seam--h"

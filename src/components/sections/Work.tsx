@@ -1,8 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { EXPERIENCE, EASE } from "@/lib/constants";
+import { EXPERIENCE, EASE, SECTION_NUMBERS } from "@/lib/constants";
+import { COMPANY_LOGOS } from "@/lib/images";
 import { Reveal } from "@/components/ui/Reveal";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 
 export function Work() {
   return (
@@ -14,17 +17,9 @@ export function Work() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_45%_35%_at_12%_18%,rgba(255,59,48,0.05)_0%,transparent_60%)]" aria-hidden="true" />
 
       <div className="container-grid relative z-10 flex h-full min-h-0 flex-col py-5 lg:py-6">
-        <motion.span
-          className="label-caps shrink-0 text-xs text-accent"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-          transition={{ duration: 0.8, ease: EASE.outExpo }}
-        >
-          / 02
-        </motion.span>
+        <SectionLabel number={SECTION_NUMBERS.experience} />
 
-        <div className="mt-4 mb-5 flex shrink-0 flex-col gap-3 lg:mb-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="section-header section-header--split mb-5 shrink-0 lg:mb-6">
           <h2 className="section-heading">
             <span className="section-heading-line">
               <span>WORK</span>
@@ -53,9 +48,15 @@ export function Work() {
                 data-cursor="hover"
               >
                 <div className="mb-3 flex items-center justify-between gap-3">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center border border-accent/40 text-[10px] font-semibold tracking-wider text-accent">
-                    {job.id}
-                  </span>
+                  <div className="experience-card__logo">
+                    <Image
+                      src={COMPANY_LOGOS[job.logoKey]}
+                      alt={`${job.company} logo`}
+                      width={36}
+                      height={36}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
                   <span className="label-caps text-[10px] text-secondary">
                     {job.period}
                   </span>

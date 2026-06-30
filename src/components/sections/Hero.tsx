@@ -1,12 +1,13 @@
 "use client";
 
-import { useId, useRef } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { TopRibbon } from "@/components/layout/TopRibbon";
 import { SITE, EASE } from "@/lib/constants";
 import { IMAGES } from "@/lib/images";
 import { PortraitImage } from "@/components/ui/PortraitImage";
-import { TextReveal } from "@/components/ui/TextReveal";
+import { CinematicName } from "@/components/ui/CinematicName";
+import { HeroScrollExplore } from "@/components/ui/HeroScrollExplore";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const META = [
@@ -16,12 +17,11 @@ const META = [
 ] as const;
 
 export function Hero() {
-  const scrollArcId = useId().replace(/:/g, "");
   const heroRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
   const isInView = useInView(heroRef, {
     once: reducedMotion,
-    amount: 0.3,
+    amount: 0.28,
   });
   const show = reducedMotion || isInView;
 
@@ -36,7 +36,7 @@ export function Hero() {
         <TopRibbon />
       </div>
 
-      <div className="hero-body">
+      <div className="hero-body relative">
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <div className="absolute inset-0 bg-gradient-to-br from-[#0c0c0c] via-bg to-[#060606]" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_18%_48%,rgba(255,80,60,0.14)_0%,transparent_60%)]" />
@@ -48,16 +48,53 @@ export function Hero() {
             <motion.div
               className="relative order-1 flex h-full min-h-0 items-center justify-center overflow-hidden"
               initial={false}
-              animate={{ opacity: show ? 1 : 0 }}
-              transition={{ duration: 1.2, delay: show ? 0.2 : 0, ease: EASE.outExpo }}
+              animate={{
+                opacity: show ? 1 : 0,
+                x: show ? 0 : -56,
+                scale: show ? 1 : 1.1,
+                filter: show ? "blur(0px)" : "blur(10px)",
+              }}
+              transition={{
+                duration: 1.35,
+                delay: show ? 0.1 : 0,
+                ease: EASE.outExpo,
+              }}
             >
-              <PortraitImage
-                src={IMAGES.portrait}
-                alt={`${SITE.person}, ${SITE.roleTitle} in ${SITE.location}`}
-                priority
-                clean
-                zoom
+              <motion.div
+                className="pointer-events-none absolute inset-[8%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,90,60,0.22)_0%,transparent_68%)] blur-2xl"
+                initial={false}
+                animate={{
+                  opacity: show ? 1 : 0,
+                  scale: show ? 1 : 0.85,
+                }}
+                transition={{
+                  duration: 1.6,
+                  delay: show ? 0.35 : 0,
+                  ease: EASE.outExpo,
+                }}
+                aria-hidden="true"
               />
+              <motion.div
+                className="relative h-full w-full"
+                initial={false}
+                animate={{
+                  y: show ? 0 : 24,
+                  scale: show ? 1 : 1.06,
+                }}
+                transition={{
+                  duration: 1.25,
+                  delay: show ? 0.2 : 0,
+                  ease: EASE.outExpo,
+                }}
+              >
+                <PortraitImage
+                  src={IMAGES.portrait}
+                  alt={`${SITE.person}, ${SITE.roleTitle} in ${SITE.location}`}
+                  priority
+                  clean
+                  zoom
+                />
+              </motion.div>
             </motion.div>
 
             <div className="relative order-2 flex h-full min-h-0 flex-col justify-center py-3 lg:py-2 lg:pl-6 xl:pl-10">
@@ -65,28 +102,25 @@ export function Hero() {
                 <motion.p
                   className="label-caps mb-4 text-xs text-accent"
                   initial={false}
-                  animate={{ opacity: show ? 1 : 0, y: show ? 0 : 10 }}
-                  transition={{ duration: 0.8, delay: show ? 0.3 : 0, ease: EASE.outExpo }}
+                  animate={{ opacity: show ? 1 : 0, y: show ? 0 : 12 }}
+                  transition={{ duration: 0.8, delay: show ? 0.25 : 0, ease: EASE.outExpo }}
                 >
                   / {SITE.roleTitle}
                 </motion.p>
 
-                <h1 className="hero-display">
-                  <span className="inline-flex flex-nowrap items-baseline gap-x-[0.35em] whitespace-nowrap">
-                    <TextReveal inline delay={0.35}>
-                      FAZIL
-                    </TextReveal>
-                    <TextReveal inline delay={0.5} className="text-stroke">
-                      ARFATH
-                    </TextReveal>
-                  </span>
+                <h1 className="hero-display relative">
+                  <CinematicName
+                    firstName="FAZIL"
+                    lastName="ARFATH"
+                    visible={show}
+                  />
                 </h1>
 
                 <motion.p
                   className="mt-5 max-w-xl text-lg leading-relaxed text-primary/90 lg:text-xl"
                   initial={false}
-                  animate={{ opacity: show ? 1 : 0, y: show ? 0 : 10 }}
-                  transition={{ duration: 0.9, delay: show ? 0.85 : 0, ease: EASE.outExpo }}
+                  animate={{ opacity: show ? 1 : 0, y: show ? 0 : 14 }}
+                  transition={{ duration: 0.9, delay: show ? 0.95 : 0, ease: EASE.outExpo }}
                 >
                   {SITE.heroTagline}
                 </motion.p>
@@ -94,8 +128,8 @@ export function Hero() {
                 <motion.ul
                   className="mt-5 flex flex-wrap gap-2.5"
                   initial={false}
-                  animate={{ opacity: show ? 1 : 0, y: show ? 0 : 8 }}
-                  transition={{ duration: 0.9, delay: show ? 1.05 : 0, ease: EASE.outExpo }}
+                  animate={{ opacity: show ? 1 : 0, y: show ? 0 : 10 }}
+                  transition={{ duration: 0.9, delay: show ? 1.15 : 0, ease: EASE.outExpo }}
                   aria-label="Key credentials"
                 >
                   {SITE.heroHighlights.map((item) => (
@@ -111,8 +145,8 @@ export function Hero() {
                 <motion.dl
                   className="mt-6 space-y-4 border-t border-border pt-6"
                   initial={false}
-                  animate={{ opacity: show ? 1 : 0, y: show ? 0 : 8 }}
-                  transition={{ duration: 0.9, delay: show ? 1.25 : 0, ease: EASE.outExpo }}
+                  animate={{ opacity: show ? 1 : 0, y: show ? 0 : 10 }}
+                  transition={{ duration: 0.9, delay: show ? 1.35 : 0, ease: EASE.outExpo }}
                 >
                   {META.map((item) => (
                     <div
@@ -136,51 +170,7 @@ export function Hero() {
         </div>
       </div>
 
-      <motion.a
-        href="#about"
-        className="hero-scroll-explore group absolute right-[var(--spacing-container)] bottom-6 z-30 block text-primary/80 transition-colors hover:text-primary"
-        initial={false}
-        animate={{ opacity: show ? 1 : 0, y: show ? 0 : -8 }}
-        transition={{ duration: 0.9, delay: show ? 1.6 : 0, ease: EASE.outExpo }}
-        aria-label="Scroll to explore about section"
-        data-cursor="hover"
-      >
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          aria-hidden="true"
-        >
-          <svg
-            viewBox="0 0 128 72"
-            fill="none"
-            className="h-[4.5rem] w-[8rem] transition-colors group-hover:text-accent"
-            role="presentation"
-          >
-            <defs>
-              <path
-                id={scrollArcId}
-                d="M 12 46 Q 64 4 116 46"
-              />
-            </defs>
-            <text className="hero-scroll-explore__text">
-              <textPath href={`#${scrollArcId}`} startOffset="50%" textAnchor="middle">
-                SCROLL TO EXPLORE
-              </textPath>
-            </text>
-            <path
-              d="M64 48v14M56 56l8 8 8-8"
-              stroke="currentColor"
-              strokeWidth="1.25"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </motion.div>
-      </motion.a>
+      <HeroScrollExplore />
     </section>
   );
 }
