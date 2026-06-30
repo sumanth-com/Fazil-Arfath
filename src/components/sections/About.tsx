@@ -27,9 +27,9 @@ export function About() {
         </h2>
 
         <div className="grid min-h-0 flex-1 items-start gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-          <div className="min-w-0 space-y-4 max-lg:mx-auto max-lg:text-center">
+          <div className="about-copy min-w-0 max-lg:mx-auto max-lg:text-center">
             <Reveal delay={0.3}>
-              <p className="max-w-2xl text-base leading-[1.75] text-secondary lg:text-lg">
+              <p className="about-copy__text max-w-2xl text-base leading-[1.75] text-secondary lg:text-lg">
                 I&apos;m{" "}
                 <strong className="text-primary">{SITE.person}</strong>, a{" "}
                 {SITE.roleTitle} with{" "}
@@ -42,11 +42,11 @@ export function About() {
             </Reveal>
 
             <Reveal delay={0.4}>
-              <p className="max-w-2xl text-base leading-[1.75] text-secondary lg:text-lg">
+              <p className="about-copy__text max-w-2xl text-base leading-[1.75] text-secondary lg:text-lg">
                 From Google Ads and Meta campaigns to technical SEO and conversion
-                optimization — I focus on outcomes that matter: lower CPA, higher
+                optimization, I focus on outcomes that matter: lower CPA, higher
                 ROI, stronger organic traffic, and better lead quality.{" "}
-                <span className="text-primary">{SITE.certification}.</span>
+                <strong className="text-primary">{SITE.certification}.</strong>
               </p>
             </Reveal>
           </div>
