@@ -91,7 +91,7 @@ export function IntroSplash() {
 
   useEffect(() => {
     if (!complete || !show) return;
-    const timer = window.setTimeout(() => setShow(false), 700);
+    const timer = window.setTimeout(() => setShow(false), 400);
     return () => window.clearTimeout(timer);
   }, [complete, show]);
 
@@ -102,7 +102,7 @@ export function IntroSplash() {
       className="splash-screen"
       initial={{ opacity: 1 }}
       animate={{ opacity: complete ? 0 : 1 }}
-      transition={{ duration: 0.5, ease: EASE.outExpo, delay: complete ? 0.35 : 0 }}
+      transition={{ duration: 0.35, ease: EASE.outExpo, delay: complete ? 0.15 : 0 }}
       aria-hidden={complete}
     >
       <div className="splash-screen__bg" />

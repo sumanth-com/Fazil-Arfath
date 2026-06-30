@@ -44,7 +44,7 @@ export function Header() {
         )}
         initial={false}
         animate={{ opacity: complete ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: EASE.outExpo, delay: complete ? 0.5 : 0 }}
+        transition={{ duration: 0.35, ease: EASE.outExpo, delay: complete ? 0.35 : 0 }}
       >
         <div className="container-grid relative flex items-center py-4 md:py-5">
           <Link
