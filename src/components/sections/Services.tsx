@@ -17,7 +17,7 @@ export function Services() {
       <div className="container-grid">
         <SectionLabel number={SECTION_NUMBERS.services} />
 
-        <div className="section-header section-header--split mb-12 lg:mb-16">
+        <div className="section-header section-header--split mb-8 sm:mb-10 lg:mb-16">
           <h2 className="section-heading">
             <span className="section-heading-line">
               <span>CORE</span>
@@ -30,7 +30,7 @@ export function Services() {
           </p>
         </div>
 
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        <div className="grid gap-8 sm:gap-10 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {SERVICES.map((service, i) => (
             <Reveal key={service.number} delay={i * 0.12}>
               <motion.article

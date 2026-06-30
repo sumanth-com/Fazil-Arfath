@@ -82,7 +82,7 @@ export function Process() {
         aria-hidden="true"
       />
 
-      <div className="container-grid relative z-10 flex h-full min-h-0 flex-col py-5 lg:py-6">
+      <div className="container-grid relative z-10 flex flex-col py-4 sm:py-5 lg:min-h-0 lg:h-full lg:py-6">
         <SectionLabel number={SECTION_NUMBERS.process} />
 
         <div className="section-header section-header--split mb-5 shrink-0 lg:mb-6">

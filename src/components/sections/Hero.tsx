@@ -44,9 +44,9 @@ export function Hero() {
         </div>
 
         <div className="container-grid relative z-10 h-full">
-          <div className="grid h-full items-center gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-14">
+          <div className="grid h-full items-center gap-4 sm:gap-6 lg:grid-cols-2 lg:gap-12 xl:gap-14">
             <motion.div
-              className="relative order-1 flex h-full min-h-0 items-center justify-center overflow-hidden"
+              className="relative order-1 flex h-full max-h-[40svh] min-h-[220px] items-center justify-center overflow-hidden sm:max-h-[44svh] lg:max-h-none lg:min-h-0"
               initial={false}
               animate={{
                 opacity: show ? 1 : 0,
@@ -97,10 +97,10 @@ export function Hero() {
               </motion.div>
             </motion.div>
 
-            <div className="relative order-2 flex h-full min-h-0 flex-col justify-center py-3 lg:py-2 lg:pl-6 xl:pl-10">
+            <div className="relative order-2 flex min-h-0 flex-col justify-center py-2 sm:py-3 lg:h-full lg:py-2 lg:pl-6 xl:pl-10">
               <div className="flex w-full max-w-2xl flex-col">
                 <motion.p
-                  className="label-caps mb-4 text-xs text-accent"
+                  className="label-caps mb-3 text-xs text-accent sm:mb-4"
                   initial={false}
                   animate={{ opacity: show ? 1 : 0, y: show ? 0 : 12 }}
                   transition={{ duration: 0.8, delay: show ? 0.25 : 0, ease: EASE.outExpo }}
@@ -117,7 +117,7 @@ export function Hero() {
                 </h1>
 
                 <motion.p
-                  className="mt-5 max-w-xl text-lg leading-relaxed text-primary/90 lg:text-xl"
+                  className="mt-4 max-w-xl text-base leading-relaxed text-primary/90 sm:mt-5 sm:text-lg lg:text-xl"
                   initial={false}
                   animate={{ opacity: show ? 1 : 0, y: show ? 0 : 14 }}
                   transition={{ duration: 0.9, delay: show ? 0.95 : 0, ease: EASE.outExpo }}
@@ -126,7 +126,7 @@ export function Hero() {
                 </motion.p>
 
                 <motion.ul
-                  className="mt-5 flex flex-wrap gap-2.5"
+                  className="mt-4 flex flex-wrap gap-2 sm:mt-5 sm:gap-2.5"
                   initial={false}
                   animate={{ opacity: show ? 1 : 0, y: show ? 0 : 10 }}
                   transition={{ duration: 0.9, delay: show ? 1.15 : 0, ease: EASE.outExpo }}
@@ -135,7 +135,7 @@ export function Hero() {
                   {SITE.heroHighlights.map((item) => (
                     <li
                       key={item}
-                      className="border border-border px-3.5 py-2 text-[11px] font-semibold tracking-[0.12em] text-primary/85 uppercase"
+                      className="border border-border px-3 py-1.5 text-xs font-semibold tracking-[0.1em] text-primary/85 uppercase sm:px-3.5 sm:py-2 sm:text-[11px] sm:tracking-[0.12em]"
                     >
                       {item}
                     </li>
@@ -143,7 +143,7 @@ export function Hero() {
                 </motion.ul>
 
                 <motion.dl
-                  className="mt-6 space-y-4 border-t border-border pt-6"
+                  className="mt-5 space-y-3 border-t border-border pt-5 sm:mt-6 sm:space-y-4 sm:pt-6"
                   initial={false}
                   animate={{ opacity: show ? 1 : 0, y: show ? 0 : 10 }}
                   transition={{ duration: 0.9, delay: show ? 1.35 : 0, ease: EASE.outExpo }}
@@ -151,11 +151,11 @@ export function Hero() {
                   {META.map((item) => (
                     <div
                       key={item.label}
-                      className="grid grid-cols-[7rem_1fr] items-baseline gap-x-6"
+                      className="grid grid-cols-1 gap-1 sm:grid-cols-[5.5rem_1fr] sm:items-baseline sm:gap-x-4"
                     >
                       <dt className="label-caps text-xs">{item.label}</dt>
                       <dd
-                        className={`text-sm leading-snug font-medium tracking-[0.04em] uppercase ${
+                        className={`text-xs leading-snug font-medium tracking-[0.03em] uppercase sm:text-sm sm:tracking-[0.04em] ${
                           item.highlight ? "text-success" : "text-primary"
                         }`}
                       >

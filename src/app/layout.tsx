@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Outfit, Cormorant } from "next/font/google";
 import { AppShell } from "@/components/layout/AppShell";
 import { Header } from "@/components/layout/Header";
@@ -64,6 +64,12 @@ export const metadata: Metadata = {
     "geo.position": `${GEO.latitude};${GEO.longitude}`,
     ICBM: `${GEO.latitude}, ${GEO.longitude}`,
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#050505",
 };
 
 export default function RootLayout({

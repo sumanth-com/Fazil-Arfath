@@ -30,8 +30,10 @@ export function Header() {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.body.classList.toggle("menu-open", menuOpen);
     return () => {
       document.body.style.overflow = "";
+      document.body.classList.remove("menu-open");
     };
   }, [menuOpen]);
 
@@ -111,7 +113,7 @@ export function Header() {
           </div>
 
           <button
-            className="relative z-10 ml-auto flex h-10 w-10 shrink-0 flex-col items-center justify-center gap-1.5 lg:hidden"
+            className="relative z-10 ml-auto flex h-11 w-11 min-h-11 min-w-11 shrink-0 flex-col items-center justify-center gap-1.5 lg:hidden"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}

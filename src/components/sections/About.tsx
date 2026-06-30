@@ -16,17 +16,17 @@ export function About() {
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_80%_20%,rgba(255,59,48,0.05)_0%,transparent_60%)]" aria-hidden="true" />
 
-      <div className="container-grid relative z-10 flex h-full min-h-0 flex-col py-5 lg:py-6">
+      <div className="container-grid relative z-10 flex flex-col py-4 sm:py-5 lg:min-h-0 lg:h-full lg:py-6">
         <SectionLabel number={SECTION_NUMBERS.about} />
 
-        <h2 className="section-heading section-header mb-6 shrink-0 lg:mb-8">
+        <h2 className="section-heading section-header mb-4 shrink-0 sm:mb-6 lg:mb-8">
           <span className="section-heading-line">
             <span>{SITE.aboutHeading}</span>
             <span className="text-accent">{SITE.aboutHeadingAccent}</span>
           </span>
         </h2>
 
-        <div className="grid min-h-0 flex-1 items-start gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+        <div className="grid min-h-0 flex-1 items-start gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
           <div className="min-w-0 space-y-4">
             <Reveal delay={0.3}>
               <p className="max-w-2xl text-base leading-[1.75] text-secondary lg:text-lg">
@@ -53,7 +53,7 @@ export function About() {
 
           <Reveal
             delay={0.2}
-            className="grid grid-cols-2 gap-x-8 gap-y-8 lg:gap-x-10 lg:gap-y-10 lg:border-l lg:border-border lg:pl-12 xl:pl-16"
+            className="grid grid-cols-2 gap-x-5 gap-y-6 sm:gap-x-8 sm:gap-y-8 lg:gap-x-10 lg:gap-y-10 lg:border-l lg:border-border lg:pl-12 xl:pl-16"
           >
             {STATS.map((stat, i) => (
               <motion.div
@@ -96,7 +96,7 @@ export function About() {
             {TOOLS.map((tool, i) => (
               <motion.span
                 key={tool}
-                className="tool-chip flex cursor-default items-center justify-center border border-border px-3 py-2.5 text-center text-[10px] leading-tight tracking-[0.1em] text-secondary uppercase lg:text-[11px]"
+                className="tool-chip flex cursor-default items-center justify-center border border-border px-2.5 py-2 text-center text-xs leading-tight tracking-[0.08em] text-secondary uppercase sm:px-3 sm:py-2.5 sm:text-[11px] sm:tracking-[0.1em]"
                 initial={{ opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false }}

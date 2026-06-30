@@ -24,11 +24,11 @@ export function Contact() {
       />
 
       <div className="container-grid relative z-10">
-        <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
+        <div className="grid items-start gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-24">
           <div className="lg:sticky lg:top-[calc(var(--site-chrome)+2rem)]">
             <SectionLabel number={SECTION_NUMBERS.contact} />
 
-            <h2 className="section-heading section-header mb-6">
+            <h2 className="section-heading section-header mb-4 sm:mb-6">
               <span className="section-heading-line">
                 <TextReveal as="span" inline>
                   LET&apos;S GROW
@@ -44,12 +44,13 @@ export function Contact() {
               </p>
             </Reveal>
 
-            <Reveal delay={0.35} className="mt-8">
-              <div className="flex flex-wrap items-center gap-5">
+            <Reveal delay={0.35} className="mt-6 sm:mt-8">
+              <div className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5">
                 <Button
                   href={`mailto:${SITE.email}`}
                   variant="pill3d"
                   size="sm"
+                  className="min-h-11 w-full sm:w-auto"
                 >
                   Mail Me
                 </Button>
