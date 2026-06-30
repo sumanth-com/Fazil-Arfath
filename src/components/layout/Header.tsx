@@ -1,23 +1,26 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { NAV_LINKS, SITE, EASE } from "@/lib/constants";
+import { ROUTES } from "@/lib/routes";
+import { BRAND_LAYOUT_ID } from "@/lib/splash";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { useSplash } from "@/contexts/SplashContext";
 
+const brandSpring = {
+  type: "spring" as const,
+  stiffness: 320,
+  damping: 36,
+  mass: 0.9,
+};
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const brandRef = useRef<HTMLSpanElement>(null);
-  const { complete, registerBrandAnchor } = useSplash();
-
-  useEffect(() => {
-    registerBrandAnchor(brandRef.current);
-    return () => registerBrandAnchor(null);
-  }, [registerBrandAnchor]);
+  const { complete } = useSplash();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -40,29 +43,32 @@ export function Header() {
           scrolled ? "bg-bg/90 backdrop-blur-xl" : "bg-bg/80 backdrop-blur-md"
         )}
         initial={false}
-        animate={{
-          opacity: complete ? 1 : 0,
-          y: complete ? 0 : -12,
-        }}
-        transition={{ duration: 0.5, ease: EASE.outExpo, delay: complete ? 0.05 : 0 }}
+        animate={{ opacity: complete ? 1 : 0 }}
+        transition={{ duration: 0.45, ease: EASE.outExpo, delay: complete ? 0.42 : 0 }}
       >
         <div className="container-grid relative flex items-center py-4 md:py-5">
           <Link
-            href="#"
+            href={ROUTES.home}
             className="relative z-10 shrink-0"
             data-cursor="hover"
             aria-label={`${SITE.name} home`}
           >
-            <span
-              ref={brandRef}
-              id="nav-brand-anchor"
-              className={cn(
-                "logo-text inline-block text-lg md:text-xl",
-                !complete && "pointer-events-none opacity-0"
-              )}
-            >
-              {SITE.name}
-            </span>
+            {complete ? (
+              <motion.span
+                layoutId={BRAND_LAYOUT_ID}
+                className="logo-text inline-block text-lg md:text-xl"
+                transition={{ layout: brandSpring }}
+              >
+                {SITE.name}
+              </motion.span>
+            ) : (
+              <span
+                className="logo-text pointer-events-none inline-block text-lg md:text-xl opacity-0"
+                aria-hidden="true"
+              >
+                {SITE.name}
+              </span>
+            )}
           </Link>
 
           <nav
@@ -73,10 +79,10 @@ export function Header() {
               <motion.div
                 key={link.href}
                 initial={false}
-                animate={{ opacity: complete ? 1 : 0, y: complete ? 0 : -8 }}
+                animate={{ opacity: complete ? 1 : 0 }}
                 transition={{
-                  delay: complete ? 0.15 + i * 0.06 : 0,
-                  duration: 0.7,
+                  delay: complete ? 0.55 + i * 0.05 : 0,
+                  duration: 0.5,
                   ease: EASE.outExpo,
                 }}
               >
@@ -95,10 +101,10 @@ export function Header() {
           <div className="relative z-10 ml-auto hidden shrink-0 lg:block">
             <motion.div
               initial={false}
-              animate={{ opacity: complete ? 1 : 0, y: complete ? 0 : -8 }}
-              transition={{ delay: complete ? 0.45 : 0, duration: 0.7, ease: EASE.outExpo }}
+              animate={{ opacity: complete ? 1 : 0 }}
+              transition={{ delay: complete ? 0.72 : 0, duration: 0.5, ease: EASE.outExpo }}
             >
-              <Button href="#contact" variant="pill3d" size="sm">
+              <Button href={ROUTES.contact} variant="pill3d" size="sm">
                 {SITE.ctaLabel}
               </Button>
             </motion.div>
@@ -156,7 +162,7 @@ export function Header() {
                   </Link>
                 </motion.div>
               ))}
-              <Button href="#contact" variant="pill3d" onClick={() => setMenuOpen(false)}>
+              <Button href={ROUTES.contact} variant="pill3d" onClick={() => setMenuOpen(false)}>
                 {SITE.ctaLabel}
               </Button>
             </nav>

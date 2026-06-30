@@ -990,64 +990,39 @@
     mix-blend-mode: overlay;
   }
 
-  .splash-screen__brand {
+  .splash-screen__stage {
     position: relative;
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    will-change: transform;
+    min-height: 1px;
   }
 
   .splash-screen__word {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
 
-  .splash-letters {
-    display: flex;
-    align-items: flex-end;
-    gap: clamp(0.15rem, 1.2vw, 0.45rem);
-    font-family: var(--font-display), sans-serif;
-    font-size: clamp(3.5rem, 14vw, 7.5rem);
+  .splash-brand-title,
+  .splash-brand-hero {
+    margin: 0;
     font-weight: 800;
-    line-height: 0.9;
-    letter-spacing: 0.06em;
-  }
-
-  .splash-letter {
-    position: relative;
-    display: inline-block;
-    min-width: 0.55em;
-  }
-
-  .splash-letter__ghost {
-    color: rgba(255, 255, 255, 0.12);
-    user-select: none;
-  }
-
-  .splash-letter__fill {
-    position: absolute;
-    inset: 0;
-    color: #ffffff;
+    font-size: clamp(3.25rem, 11vw, 6.5rem);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    color: var(--color-primary);
     text-shadow:
-      0 0 40px rgba(255, 255, 255, 0.25),
-      0 0 80px rgba(255, 59, 48, 0.15);
+      0 0 48px rgba(255, 255, 255, 0.18),
+      0 0 72px rgba(255, 59, 48, 0.12);
   }
 
-  .splash-letter__bar {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -0.18em;
-    height: 3px;
-    transform-origin: left center;
-    background: linear-gradient(90deg, var(--color-accent), rgba(255, 255, 255, 0.85));
-    border-radius: 2px;
-    box-shadow: 0 0 12px rgba(255, 59, 48, 0.55);
-    transition: opacity 0.2s ease;
+  .splash-brand-char {
+    display: inline-block;
+    will-change: transform, opacity, filter;
   }
 
   .splash-screen__loader-track {
@@ -1081,10 +1056,6 @@
   .splash-screen__caption-progress {
     color: var(--color-accent);
     font-variant-numeric: tabular-nums;
-  }
-
-  .splash-screen__mr {
-    color: var(--color-primary);
   }
 
   @keyframes splash-glow-pulse {

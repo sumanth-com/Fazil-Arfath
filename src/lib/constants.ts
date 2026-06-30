@@ -29,11 +29,11 @@ export const SITE = {
 } as const;
 
 export const NAV_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Process", href: "#process" },
-  { label: "Services", href: "#services" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/about" },
+  { label: "Experience", href: "/experience" },
+  { label: "Process", href: "/process" },
+  { label: "Services", href: "/services" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 export const SECTION_NUMBERS = {

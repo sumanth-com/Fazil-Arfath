@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { ROUTES } from "@/lib/routes";
 
 interface HeroScrollExploreProps {
   href?: string;
 }
 
-export function HeroScrollExplore({ href = "#about" }: HeroScrollExploreProps) {
+export function HeroScrollExplore({ href = ROUTES.about }: HeroScrollExploreProps) {
   const reducedMotion = useReducedMotion();
   const [visible, setVisible] = useState(true);
 
@@ -27,7 +29,7 @@ export function HeroScrollExplore({ href = "#about" }: HeroScrollExploreProps) {
   if (!visible) return null;
 
   return (
-    <a
+    <Link
       href={href}
       aria-label="Scroll to explore about section"
       data-cursor="hover"
@@ -52,6 +54,6 @@ export function HeroScrollExplore({ href = "#about" }: HeroScrollExploreProps) {
           strokeLinejoin="round"
         />
       </svg>
-    </a>
+    </Link>
   );
 }

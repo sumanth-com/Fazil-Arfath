@@ -2,21 +2,19 @@
 
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { SPLASH_EXIT_MS, SPLASH_LOAD_MS } from "@/lib/splash";
 
 type SplashPhase = "loading" | "exit" | "complete";
 
 type SplashContextValue = {
   phase: SplashPhase;
   complete: boolean;
-  registerBrandAnchor: (node: HTMLElement | null) => void;
-  brandAnchor: HTMLElement | null;
 };
 
 const SplashContext = createContext<SplashContextValue | null>(null);
@@ -27,11 +25,6 @@ export function SplashProvider({ children }: { children: React.ReactNode }) {
   const reducedMotion = useReducedMotion();
   const [phase, setPhase] = useState<SplashPhase>("loading");
   const [skipped, setSkipped] = useState(false);
-  const [brandAnchor, setBrandAnchor] = useState<HTMLElement | null>(null);
-
-  const registerBrandAnchor = useCallback((node: HTMLElement | null) => {
-    setBrandAnchor(node);
-  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -44,12 +37,12 @@ export function SplashProvider({ children }: { children: React.ReactNode }) {
 
     document.body.classList.add("splash-active");
 
-    const exitTimer = window.setTimeout(() => setPhase("exit"), 3400);
+    const exitTimer = window.setTimeout(() => setPhase("exit"), SPLASH_LOAD_MS);
     const doneTimer = window.setTimeout(() => {
       setPhase("complete");
       sessionStorage.setItem(SPLASH_KEY, "1");
       document.body.classList.remove("splash-active");
-    }, 5000);
+    }, SPLASH_EXIT_MS);
 
     return () => {
       window.clearTimeout(exitTimer);
@@ -64,10 +57,8 @@ export function SplashProvider({ children }: { children: React.ReactNode }) {
     () => ({
       phase: skipped ? ("complete" as const) : phase,
       complete,
-      registerBrandAnchor,
-      brandAnchor,
     }),
-    [phase, skipped, complete, registerBrandAnchor, brandAnchor]
+    [phase, skipped, complete]
   );
 
   return (
