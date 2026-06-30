@@ -276,11 +276,16 @@
   @media (min-width: 1024px) {
     .hero-quote {
       text-align: left;
+      width: 100%;
+      max-width: 36rem;
+      gap: 0.4rem;
     }
 
     .hero-quote p {
-      font-size: 1.0625rem;
-      line-height: 1.55;
+      font-size: clamp(0.975rem, 1.1vw, 1.0625rem);
+      line-height: 1.5;
+      text-wrap: normal;
+      white-space: nowrap;
     }
   }
 
