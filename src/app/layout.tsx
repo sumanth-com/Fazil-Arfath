@@ -9,7 +9,7 @@ import { GsapProvider } from "@/components/layout/GsapProvider";
 import { CustomCursor } from "@/components/layout/CustomCursor";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { SITE } from "@/lib/constants";
-import { JsonLd } from "@/components/seo/JsonLd";
+import { GEO, SECTION_SEO, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -28,21 +28,41 @@ const cormorant = Cormorant({
 });
 
 export const metadata: Metadata = {
-  title: `${SITE.person} — ${SITE.roleTitle} | ${SITE.name}`,
-  description: `${SITE.tagline} Google Ads, SEO, and performance marketing for B2B SaaS and technology companies in Bangalore, India.`,
-  keywords: [
-    "Google Ads expert Bangalore",
-    "SEO specialist India",
-    "digital marketing freelancer",
-    "performance marketing B2B SaaS",
-    SITE.person,
-    SITE.alsoKnownAs,
-  ],
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SECTION_SEO.home.title,
+    template: `%s | ${SITE.name}`,
+  },
+  description: SECTION_SEO.home.description,
+  applicationName: SITE.name,
+  authors: [{ name: SITE.person, url: SITE.linkedin }],
+  creator: SITE.person,
+  publisher: SITE.name,
+  formatDetection: {
+    email: true,
+    telephone: true,
+    address: true,
+  },
   openGraph: {
-    title: `${SITE.person} — ${SITE.roleDetail}`,
-    description: SITE.tagline,
     type: "website",
     locale: "en_IN",
+    siteName: SITE.name,
+    title: SECTION_SEO.home.title,
+    description: SECTION_SEO.home.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    creator: `@${SITE.personShort}`,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  other: {
+    "geo.region": GEO.regionCode,
+    "geo.placename": GEO.locality,
+    "geo.position": `${GEO.latitude};${GEO.longitude}`,
+    ICBM: `${GEO.latitude}, ${GEO.longitude}`,
   },
 };
 
@@ -53,10 +73,15 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="en"
+      lang="en-IN"
       className={`${outfit.variable} ${cormorant.variable} splash-pending`}
     >
       <head>
+        <meta name="author" content={SITE.person} />
+        <meta name="geo.region" content={GEO.regionCode} />
+        <meta name="geo.placename" content={GEO.locality} />
+        <meta name="geo.position" content={`${GEO.latitude};${GEO.longitude}`} />
+        <meta name="ICBM" content={`${GEO.latitude}, ${GEO.longitude}`} />
         <script
           dangerouslySetInnerHTML={{
             __html: `try{if(sessionStorage.getItem("fazil-splash-seen")==="1"){document.documentElement.classList.remove("splash-pending");document.documentElement.classList.add("splash-ready");}}catch(e){document.documentElement.classList.remove("splash-pending");document.documentElement.classList.add("splash-ready");}`,
@@ -64,7 +89,6 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-bg font-sans text-primary antialiased">
-        <JsonLd />
         <SmoothScroll>
           <GsapProvider>
             <AppShell>
