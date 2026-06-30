@@ -2,29 +2,21 @@
 
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
-import { EASE, SITE } from "@/lib/constants";
-import { BRAND_LAYOUT_ID, SPLASH_LOAD_MS } from "@/lib/splash";
+import { EASE } from "@/lib/constants";
+import { SPLASH_LOAD_MS } from "@/lib/splash";
 import { useSplash } from "@/contexts/SplashContext";
-
-const brandSpring = {
-  type: "spring" as const,
-  stiffness: 260,
-  damping: 32,
-  mass: 1,
-};
+import { SplashBrandTitle } from "@/components/layout/SplashBrandTitle";
 
 export function IntroSplash() {
   const { complete } = useSplash();
   const progress = useMotionValue(0);
-  const [show, setShow] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    if (complete) {
-      const timer = window.setTimeout(() => setShow(false), 400);
-      return () => window.clearTimeout(timer);
-    }
+    if (!complete) return;
 
-    setShow(true);
+    const timer = window.setTimeout(() => setVisible(false), 520);
+    return () => window.clearTimeout(timer);
   }, [complete]);
 
   useEffect(() => {
@@ -38,49 +30,50 @@ export function IntroSplash() {
     return () => controls.stop();
   }, [complete, progress]);
 
-  if (!show) return null;
+  if (!visible) return null;
 
   return (
     <motion.div
       className="splash-screen"
       initial={{ opacity: 1 }}
       animate={{ opacity: complete ? 0 : 1 }}
-      transition={{ duration: 0.35, ease: EASE.outExpo, delay: complete ? 0.15 : 0 }}
+      transition={{ duration: 0.45, ease: EASE.outExpo, delay: complete ? 0.12 : 0 }}
       aria-hidden={complete}
+      aria-live="polite"
     >
-      <div className="splash-screen__bg" aria-hidden="true" />
+      <div className="splash-screen__bg" aria-hidden="true">
+        <span className="splash-orb splash-orb--one" />
+        <span className="splash-orb splash-orb--two" />
+        <span className="splash-orb splash-orb--three" />
+        <span className="splash-beam" />
+        <span className="splash-grid" />
+        <span className="splash-grain" />
+      </div>
+
       <div className="splash-screen__vignette" aria-hidden="true" />
 
       <div className="splash-screen__center">
         {!complete && (
           <motion.div
             className="splash-screen__brand-block"
-            initial={{ opacity: 0, scale: 0.88, filter: "blur(10px)" }}
-            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-            transition={{ duration: 0.85, ease: EASE.outExpo }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.35, ease: EASE.outExpo }}
           >
-            <motion.span
-              layoutId={BRAND_LAYOUT_ID}
-              className="logo-text splash-brand-hero"
-              transition={{ layout: brandSpring }}
-            >
-              {SITE.name}
-            </motion.span>
+            <SplashBrandTitle active />
           </motion.div>
         )}
 
         <motion.div
           className="splash-screen__progress"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: complete ? 0 : 1 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: complete ? 0 : 1, y: complete ? 8 : 0 }}
+          transition={{ duration: 0.45, delay: complete ? 0 : 0.25 }}
           aria-hidden="true"
         >
           <motion.span className="splash-screen__progress-fill" style={{ scaleX: progress }} />
         </motion.div>
       </div>
-
-      <span className="sr-only">Loading portfolio for {SITE.person}</span>
     </motion.div>
   );
 }

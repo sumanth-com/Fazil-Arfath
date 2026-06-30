@@ -91,7 +91,7 @@ export default function RootLayout({
         <meta name="ICBM" content={`${GEO.latitude}, ${GEO.longitude}`} />
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{history.scrollRestoration="manual";var p=location.pathname;if(p==="/"||p===""||p==="/home"){window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;}if(sessionStorage.getItem("fazil-splash-seen")==="1"){document.documentElement.classList.remove("splash-pending");document.documentElement.classList.add("splash-ready");}}catch(e){document.documentElement.classList.remove("splash-pending");document.documentElement.classList.add("splash-ready");}`,
+            __html: `try{history.scrollRestoration="manual";var p=location.pathname;if(p==="/"||p===""||p==="/home"){window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;}document.documentElement.classList.add("splash-pending");document.body.style.background="#050505";}catch(e){document.documentElement.classList.remove("splash-pending");document.documentElement.classList.add("splash-ready");}`,
           }}
         />
       </head>
