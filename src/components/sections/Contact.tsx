@@ -48,16 +48,16 @@ export function Contact() {
 
             <div className="contact-actions max-lg:text-center">
               <Reveal delay={0.35}>
-                <div className="flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 lg:items-start">
+                <div className="contact-cta-row flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 lg:items-center lg:justify-start">
                   <Button
                     href={`mailto:${SITE.email}`}
                     variant="pill3d"
                     size="sm"
-                    className="min-h-11 w-full sm:w-auto"
+                    className="min-h-11 w-full shrink-0 sm:w-auto"
                   >
                     {SITE.ctaLabel}
                   </Button>
-                  <span className="contact-channel-location label-caps flex items-center gap-2.5">
+                  <span className="contact-channel-location label-caps inline-flex min-h-11 items-center gap-2.5">
                     <LocationPinIcon3D />
                     {SITE.location}
                   </span>

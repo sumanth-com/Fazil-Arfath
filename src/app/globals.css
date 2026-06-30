@@ -996,6 +996,16 @@
       margin-top: 0;
     }
 
+    .contact-cta-row {
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .contact-channel-location {
+      align-self: center;
+      padding-block: 0.125rem;
+    }
+
     .contact-offers {
       grid-column: 2;
       grid-row: 1;
@@ -1585,7 +1595,8 @@
       margin-inline: auto;
     }
 
-    #contact .contact-actions .flex {
+    #contact .contact-actions .flex,
+    #contact .contact-cta-row {
       align-items: center;
       justify-content: center;
     }
