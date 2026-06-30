@@ -25,24 +25,70 @@ export function Contact() {
 
       <div className="container-grid relative z-10">
         <div className="contact-layout">
-          <div className="contact-intro max-lg:text-center">
-            <SectionLabel number={SECTION_NUMBERS.contact} />
+          <div className="contact-left">
+            <div className="contact-intro max-lg:text-center">
+              <SectionLabel number={SECTION_NUMBERS.contact} />
 
-            <h2 id="contact-heading" className="section-heading section-header mb-4 sm:mb-6">
-              <span className="section-heading-line">
-                <TextReveal as="span" inline>
-                  LET&apos;S GROW
-                </TextReveal>
-                <span className="text-accent">TOGETHER</span>
-              </span>
-            </h2>
+              <h2 id="contact-heading" className="section-heading section-header mb-4 sm:mb-6">
+                <span className="section-heading-line">
+                  <TextReveal as="span" inline>
+                    LET&apos;S GROW
+                  </TextReveal>
+                  <span className="text-accent">TOGETHER</span>
+                </span>
+              </h2>
 
-            <Reveal delay={0.25}>
-              <p className="mx-auto max-w-md text-sm leading-relaxed text-secondary lg:mx-0">
-                Looking for a senior digital marketing specialist for your B2B
-                SaaS or tech brand? I respond {SITE.responseTime.toLowerCase()}.
-              </p>
-            </Reveal>
+              <Reveal delay={0.25}>
+                <p className="mx-auto max-w-md text-sm leading-relaxed text-secondary lg:mx-0">
+                  Looking for a senior digital marketing specialist for your B2B
+                  SaaS or tech brand? I respond {SITE.responseTime.toLowerCase()}.
+                </p>
+              </Reveal>
+            </div>
+
+            <div className="contact-actions max-lg:text-center">
+              <Reveal delay={0.35}>
+                <div className="flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 lg:items-start">
+                  <Button
+                    href={`mailto:${SITE.email}`}
+                    variant="pill3d"
+                    size="sm"
+                    className="min-h-11 w-full sm:w-auto"
+                  >
+                    {SITE.ctaLabel}
+                  </Button>
+                  <span className="contact-channel-location label-caps flex items-center gap-2.5">
+                    <LocationPinIcon3D />
+                    {SITE.location}
+                  </span>
+                </div>
+
+                <div className="mt-5 flex items-center justify-center gap-4 lg:justify-start">
+                  <a
+                    href={SITE.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-channel-icon"
+                    data-cursor="hover"
+                    aria-label="LinkedIn"
+                  >
+                    <span className="contact-channel-icon__shine" aria-hidden="true" />
+                    <LinkedInIcon3D />
+                  </a>
+                  <a
+                    href={WHATSAPP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-channel-icon"
+                    data-cursor="hover"
+                    aria-label={`WhatsApp ${SITE.phone}`}
+                  >
+                    <span className="contact-channel-icon__shine" aria-hidden="true" />
+                    <WhatsAppIcon3D />
+                  </a>
+                </div>
+              </Reveal>
+            </div>
           </div>
 
           <div className="contact-offers">
@@ -76,50 +122,6 @@ export function Contact() {
                 </div>
               </motion.article>
             ))}
-          </div>
-
-          <div className="contact-actions max-lg:text-center lg:sticky lg:top-[calc(var(--site-chrome)+2rem)]">
-            <Reveal delay={0.35}>
-              <div className="flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 lg:items-start">
-                <Button
-                  href={`mailto:${SITE.email}`}
-                  variant="pill3d"
-                  size="sm"
-                  className="min-h-11 w-full sm:w-auto"
-                >
-                  {SITE.ctaLabel}
-                </Button>
-                <span className="contact-channel-location label-caps flex items-center gap-2.5">
-                  <LocationPinIcon3D />
-                  {SITE.location}
-                </span>
-              </div>
-
-              <div className="mt-5 flex items-center justify-center gap-4 lg:justify-start">
-                <a
-                  href={SITE.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="contact-channel-icon"
-                  data-cursor="hover"
-                  aria-label="LinkedIn"
-                >
-                  <span className="contact-channel-icon__shine" aria-hidden="true" />
-                  <LinkedInIcon3D />
-                </a>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="contact-channel-icon"
-                  data-cursor="hover"
-                  aria-label={`WhatsApp ${SITE.phone}`}
-                >
-                  <span className="contact-channel-icon__shine" aria-hidden="true" />
-                  <WhatsAppIcon3D />
-                </a>
-              </div>
-            </Reveal>
           </div>
         </div>
       </div>
