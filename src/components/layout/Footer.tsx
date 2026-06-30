@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border py-8" role="contentinfo">
       <div className="container-grid">
-        <p className="text-center text-xs text-secondary">
+        <p className="w-full text-center text-xs text-secondary">
           © {year} {SITE.person}. All rights reserved.
         </p>
       </div>
