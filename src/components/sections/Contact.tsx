@@ -1,0 +1,127 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { SITE, HERO_SERVICES, EASE } from "@/lib/constants";
+import { ServiceIcon } from "@/components/ui/ServiceIcon";
+import { TextReveal } from "@/components/ui/TextReveal";
+import { Reveal } from "@/components/ui/Reveal";
+
+import { WhatsAppIcon3D, MailIcon3D } from "@/components/ui/SocialIcons";
+
+const WHATSAPP_URL = `https://wa.me/${SITE.phone.replace(/\D/g, "")}`;
+
+export function Contact() {
+  return (
+    <section
+      id="contact"
+      className="section-padding relative scroll-mt-[var(--site-chrome)] overflow-hidden"
+      aria-label="Contact"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_15%_50%,rgba(255,59,48,0.05)_0%,transparent_60%)]"
+        aria-hidden="true"
+      />
+
+      <div className="container-grid relative z-10">
+        <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
+          <div className="lg:sticky lg:top-[calc(var(--site-chrome)+2rem)]">
+            <motion.span
+              className="label-caps mb-6 block text-accent"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: false }}
+              transition={{ duration: 0.8, ease: EASE.outExpo }}
+            >
+              / Get in Touch
+            </motion.span>
+
+            <h2 className="contact-heading mb-6">
+              <TextReveal as="span" className="block">
+                LET&apos;S GROW
+              </TextReveal>
+              <motion.span
+                className="heading-serif contact-heading-accent block text-accent"
+                initial={{ opacity: 0, y: 48, filter: "blur(8px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: false }}
+                transition={{ duration: 1, delay: 0.15, ease: EASE.outExpo }}
+              >
+                Together
+              </motion.span>
+            </h2>
+
+            <Reveal delay={0.25}>
+              <p className="max-w-md text-sm leading-relaxed text-secondary">
+                Looking for a senior digital marketing specialist for your B2B
+                SaaS or tech brand? I respond {SITE.responseTime.toLowerCase()}.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.35} className="mt-8 flex flex-wrap items-center gap-5">
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-channel-icon"
+                aria-label={`WhatsApp ${SITE.phone}`}
+                data-cursor="hover"
+              >
+                <span className="contact-channel-icon__shine" aria-hidden="true" />
+                <WhatsAppIcon3D />
+              </a>
+              <a
+                href={`mailto:${SITE.email}`}
+                className="contact-channel-icon"
+                aria-label={`Email ${SITE.email}`}
+                data-cursor="hover"
+              >
+                <span className="contact-channel-icon__shine" aria-hidden="true" />
+                <MailIcon3D />
+              </a>
+              <span className="contact-channel-location label-caps">
+                {SITE.location}
+              </span>
+            </Reveal>
+          </div>
+
+          <div className="contact-offers border-t border-border lg:border-t-0">
+            {HERO_SERVICES.map((item, i) => (
+              <motion.article
+                key={item.number}
+                className="contact-offer group"
+                initial={{ opacity: 0, x: 24, filter: "blur(6px)" }}
+                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                viewport={{ once: false, margin: "-8%" }}
+                transition={{
+                  duration: 0.85,
+                  delay: i * 0.1,
+                  ease: EASE.outExpo,
+                }}
+              >
+                <span className="contact-offer-number">{item.number}</span>
+
+                <div className="contact-offer-rail" aria-hidden="true">
+                  <span className="contact-offer-line" />
+                </div>
+
+                <div className="contact-offer-icon">
+                  <ServiceIcon name={item.icon} className="h-5 w-5" />
+                  <span className="contact-offer-icon-dot" aria-hidden="true" />
+                </div>
+
+                <div className="contact-offer-copy">
+                  <h3 className="text-sm font-semibold tracking-[0.14em] text-primary uppercase">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-secondary">
+                    {item.description}
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
