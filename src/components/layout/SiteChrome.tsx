@@ -26,7 +26,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div id="site-chrome" className="sticky top-0 z-50">
+    <div id="site-chrome" className="site-chrome fixed inset-x-0 top-0 z-[60]">
       {children}
     </div>
   );

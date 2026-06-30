@@ -26,29 +26,21 @@ function markSplashReady() {
   document.documentElement.classList.add("splash-ready");
 }
 
+function hasSeenSplash() {
+  try {
+    return sessionStorage.getItem(SPLASH_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
 export function SplashProvider({ children }: { children: React.ReactNode }) {
   const reducedMotion = useReducedMotion();
-  const [phase, setPhase] = useState<SplashPhase>(() => {
-    if (typeof window === "undefined") return "loading";
-    try {
-      return sessionStorage.getItem(SPLASH_KEY) === "1" ? "complete" : "loading";
-    } catch {
-      return "loading";
-    }
-  });
-  const [skipped, setSkipped] = useState(() => {
-    if (typeof window === "undefined") return false;
-    try {
-      return sessionStorage.getItem(SPLASH_KEY) === "1";
-    } catch {
-      return false;
-    }
-  });
+  const [phase, setPhase] = useState<SplashPhase>("loading");
+  const [skipped, setSkipped] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    if (reducedMotion || sessionStorage.getItem(SPLASH_KEY) === "1") {
+    if (reducedMotion || hasSeenSplash()) {
       setSkipped(true);
       setPhase("complete");
       markSplashReady();

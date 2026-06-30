@@ -39,10 +39,10 @@ const CORNER_ENTRANCE = [
 ] as const;
 
 const CORNER_ENTRANCE_MOBILE = [
-  { x: "-40vw", y: "-28vh", rotate: -6 },
-  { x: "40vw", y: "-22vh", rotate: 6 },
-  { x: "-40vw", y: "22vh", rotate: 6 },
-  { x: "40vw", y: "28vh", rotate: -6 },
+  { x: 0, y: -32, rotate: 0 },
+  { x: 0, y: -24, rotate: 0 },
+  { x: 0, y: 24, rotate: 0 },
+  { x: 0, y: 32, rotate: 0 },
 ] as const;
 
 function usePuzzleLayout() {
@@ -75,7 +75,7 @@ export function Process() {
     <section
       id="process"
       className="process-section section-gap viewport-section relative"
-      aria-label="Process"
+      aria-labelledby="process-heading"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_40%_35%_at_88%_22%,rgba(255,59,48,0.05)_0%,transparent_60%)]"
@@ -86,7 +86,7 @@ export function Process() {
         <SectionLabel number={SECTION_NUMBERS.process} />
 
         <div className="section-header section-header--split mb-5 shrink-0 lg:mb-6">
-          <h2 className="section-heading">
+          <h2 id="process-heading" className="section-heading">
             <span className="section-heading-line">
               <span>MY</span>
               <span className="text-accent">PROCESS</span>
@@ -101,7 +101,7 @@ export function Process() {
 
         <div
           ref={boardRef}
-          className="process-puzzle-board relative flex min-h-0 flex-1 items-center justify-center"
+          className="process-puzzle-board relative flex min-h-0 flex-1 items-start justify-start lg:items-center lg:justify-center"
           data-assembled={assembled ? "true" : "false"}
         >
           <motion.div
@@ -180,12 +180,12 @@ export function Process() {
 
                   <div className="process-puzzle-card__inner">
                     <div className="process-puzzle-card__head">
-                      <div className="process-puzzle-card__icon">
-                        <ProcessIcon name={step.icon} className="h-[18px] w-[18px]" />
+                      <div className="process-puzzle-card__icon" aria-hidden="true">
+                        <ProcessIcon name={step.icon} className="h-[18px] w-[18px] lg:h-[18px] lg:w-[18px]" />
                       </div>
+                      <h3 className="process-puzzle-card__title">{step.title}</h3>
                     </div>
 
-                    <h3 className="process-puzzle-card__title">{step.title}</h3>
                     <p className="process-puzzle-card__text">{step.description}</p>
                   </div>
 

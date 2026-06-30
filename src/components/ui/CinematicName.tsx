@@ -66,7 +66,7 @@ export function CinematicName({
 
   return (
     <span className={cn("relative inline-block", className)}>
-      <span className="inline-flex max-w-full flex-wrap items-baseline gap-x-[0.2em] gap-y-0 sm:flex-nowrap sm:gap-x-[0.35em] sm:whitespace-nowrap">
+      <span className="inline-flex max-w-full flex-wrap items-baseline justify-center gap-x-[0.2em] gap-y-0 lg:flex-nowrap lg:justify-start lg:gap-x-[0.35em] lg:whitespace-nowrap">
         <span aria-hidden="true">
           {firstName.split("").map((char, i) => (
             <CinematicLetter

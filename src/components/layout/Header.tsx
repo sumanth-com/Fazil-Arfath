@@ -9,6 +9,7 @@ import { BRAND_LAYOUT_ID } from "@/lib/splash";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { useSplash } from "@/contexts/SplashContext";
+import { useLenis } from "@/contexts/LenisContext";
 
 const brandSpring = {
   type: "spring" as const,
@@ -21,19 +22,46 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { complete } = useSplash();
+  const lenis = useLenis();
+
+  const closeMenu = () => setMenuOpen(false);
+  const toggleMenu = () => setMenuOpen((open) => !open);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const updateScrolled = (scrollY: number) => {
+      setScrolled(scrollY > 24);
+    };
+
+    if (lenis) {
+      const onLenisScroll = () => updateScrolled(lenis.scroll);
+      lenis.on("scroll", onLenisScroll);
+      updateScrolled(lenis.scroll);
+      return () => {
+        lenis.off("scroll", onLenisScroll);
+      };
+    }
+
+    const onScroll = () => updateScrolled(window.scrollY);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [lenis]);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    document.body.classList.toggle("menu-open", menuOpen);
+    if (!menuOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") closeMenu();
+    };
+
+    document.body.style.overflow = "hidden";
+    document.body.classList.add("menu-open");
+
+    window.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = "";
       document.body.classList.remove("menu-open");
+      window.removeEventListener("keydown", onKeyDown);
     };
   }, [menuOpen]);
 
@@ -41,8 +69,10 @@ export function Header() {
     <>
       <motion.header
         className={cn(
-          "transition-colors duration-500",
-          scrolled ? "bg-bg/90 backdrop-blur-xl" : "bg-bg/80 backdrop-blur-md"
+          "relative z-50 w-full border-b transition-[background-color,border-color,backdrop-filter] duration-500",
+          scrolled
+            ? "border-border/80 bg-bg/95 backdrop-blur-xl"
+            : "border-transparent bg-bg/80 backdrop-blur-md"
         )}
         initial={false}
         animate={{ opacity: complete ? 1 : 0 }}
@@ -54,6 +84,7 @@ export function Header() {
             className="relative z-10 shrink-0"
             data-cursor="hover"
             aria-label={`${SITE.name} home`}
+            onClick={closeMenu}
           >
             {complete ? (
               <motion.span
@@ -113,24 +144,32 @@ export function Header() {
           </div>
 
           <button
-            className="relative z-10 ml-auto flex h-11 w-11 min-h-11 min-w-11 shrink-0 flex-col items-center justify-center gap-1.5 lg:hidden"
-            onClick={() => setMenuOpen(!menuOpen)}
+            type="button"
+            className={cn(
+              "relative z-10 ml-auto flex h-11 w-11 min-h-11 min-w-11 shrink-0 flex-col items-center justify-center gap-1.5 rounded-full transition-colors lg:hidden",
+              menuOpen && "bg-white/5"
+            )}
+            onClick={toggleMenu}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
             data-cursor="hover"
             tabIndex={complete ? 0 : -1}
           >
             <motion.span
               className="block h-px w-6 bg-primary"
               animate={menuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.25, ease: EASE.outExpo }}
             />
             <motion.span
               className="block h-px w-6 bg-primary"
-              animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
+              animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.2 }}
             />
             <motion.span
               className="block h-px w-6 bg-primary"
               animate={menuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.25, ease: EASE.outExpo }}
             />
           </button>
         </div>
@@ -139,34 +178,60 @@ export function Header() {
       <AnimatePresence>
         {menuOpen && complete && (
           <motion.div
-            className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-bg/95 backdrop-blur-2xl lg:hidden"
+            className="mobile-nav-overlay fixed inset-x-0 bottom-0 top-[var(--site-chrome)] z-[80] lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: EASE.outExpo }}
+            transition={{ duration: 0.35, ease: EASE.outExpo }}
+            onClick={closeMenu}
+            aria-hidden={!menuOpen}
           >
-            <nav className="flex flex-col items-center gap-8" aria-label="Mobile navigation">
-              {NAV_LINKS.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ delay: i * 0.08, ease: EASE.outExpo }}
-                >
-                  <Link
-                    href={link.href}
-                    className="heading-poster text-4xl"
-                    onClick={() => setMenuOpen(false)}
-                    data-cursor="hover"
+            <motion.div
+              className="mobile-nav-backdrop absolute inset-0 bg-bg/92 backdrop-blur-2xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+
+            <nav
+              id="mobile-nav"
+              className="relative flex h-full flex-col items-center justify-center px-6 py-10"
+              aria-label="Mobile navigation"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <ul className="flex w-full max-w-xs flex-col items-center justify-center gap-1 sm:max-w-sm">
+                {NAV_LINKS.map((link, i) => (
+                  <motion.li
+                    key={link.href}
+                    className="w-full"
+                    initial={{ opacity: 0, y: 24 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 16 }}
+                    transition={{ delay: 0.05 + i * 0.07, duration: 0.45, ease: EASE.outExpo }}
                   >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
-              <Button href={ROUTES.contact} variant="pill3d" onClick={() => setMenuOpen(false)}>
-                {SITE.ctaLabel}
-              </Button>
+                    <Link
+                      href={link.href}
+                      className="mobile-nav-link heading-poster py-3.5 text-[1.65rem] leading-none text-primary transition-colors hover:text-accent sm:text-4xl"
+                      onClick={closeMenu}
+                      data-cursor="hover"
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
+
+              <motion.div
+                className="mt-12 flex w-full justify-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 12 }}
+                transition={{ delay: 0.4, duration: 0.45, ease: EASE.outExpo }}
+              >
+                <Button href={ROUTES.contact} variant="pill3d" onClick={closeMenu}>
+                  {SITE.ctaLabel}
+                </Button>
+              </motion.div>
             </nav>
           </motion.div>
         )}

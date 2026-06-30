@@ -16,7 +16,7 @@ export function Contact() {
     <section
       id="contact"
       className="section-padding relative scroll-mt-[var(--site-chrome)] overflow-hidden"
-      aria-label="Contact"
+      aria-labelledby="contact-heading"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_15%_50%,rgba(255,59,48,0.05)_0%,transparent_60%)]"
@@ -24,11 +24,11 @@ export function Contact() {
       />
 
       <div className="container-grid relative z-10">
-        <div className="grid items-start gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-24">
-          <div className="lg:sticky lg:top-[calc(var(--site-chrome)+2rem)]">
+        <div className="contact-layout">
+          <div className="contact-intro max-lg:text-center">
             <SectionLabel number={SECTION_NUMBERS.contact} />
 
-            <h2 className="section-heading section-header mb-4 sm:mb-6">
+            <h2 id="contact-heading" className="section-heading section-header mb-4 sm:mb-6">
               <span className="section-heading-line">
                 <TextReveal as="span" inline>
                   LET&apos;S GROW
@@ -38,21 +38,56 @@ export function Contact() {
             </h2>
 
             <Reveal delay={0.25}>
-              <p className="max-w-md text-sm leading-relaxed text-secondary">
+              <p className="mx-auto max-w-md text-sm leading-relaxed text-secondary lg:mx-0">
                 Looking for a senior digital marketing specialist for your B2B
                 SaaS or tech brand? I respond {SITE.responseTime.toLowerCase()}.
               </p>
             </Reveal>
+          </div>
 
-            <Reveal delay={0.35} className="mt-6 sm:mt-8">
-              <div className="flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5">
+          <div className="contact-offers">
+            {HERO_SERVICES.map((item, i) => (
+              <motion.article
+                key={item.number}
+                className="contact-offer group"
+                initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: false, margin: "-8%" }}
+                transition={{
+                  duration: 0.85,
+                  delay: i * 0.1,
+                  ease: EASE.outExpo,
+                }}
+              >
+                <span className="contact-offer__number">{item.number}</span>
+
+                <div className="contact-offer-rail" aria-hidden="true">
+                  <span className="contact-offer-line" />
+                </div>
+
+                <div className="contact-offer-icon" aria-hidden="true">
+                  <ServiceIcon name={item.icon} className="h-5 w-5" />
+                  <span className="contact-offer-icon-dot" aria-hidden="true" />
+                </div>
+
+                <div className="contact-offer-copy">
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          <div className="contact-actions max-lg:text-center lg:sticky lg:top-[calc(var(--site-chrome)+2rem)]">
+            <Reveal delay={0.35}>
+              <div className="flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 lg:items-start">
                 <Button
                   href={`mailto:${SITE.email}`}
                   variant="pill3d"
                   size="sm"
                   className="min-h-11 w-full sm:w-auto"
                 >
-                  Mail Me
+                  {SITE.ctaLabel}
                 </Button>
                 <span className="contact-channel-location label-caps flex items-center gap-2.5">
                   <LocationPinIcon3D />
@@ -60,7 +95,7 @@ export function Contact() {
                 </span>
               </div>
 
-              <div className="mt-5 flex items-center gap-4">
+              <div className="mt-5 flex items-center justify-center gap-4 lg:justify-start">
                 <a
                   href={SITE.linkedin}
                   target="_blank"
@@ -85,45 +120,6 @@ export function Contact() {
                 </a>
               </div>
             </Reveal>
-          </div>
-
-          <div className="contact-offers border-t border-border lg:border-t-0">
-            {HERO_SERVICES.map((item, i) => (
-              <motion.article
-                key={item.number}
-                className="contact-offer group"
-                initial={{ opacity: 0, x: 24, filter: "blur(6px)" }}
-                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-                viewport={{ once: false, margin: "-8%" }}
-                transition={{
-                  duration: 0.85,
-                  delay: i * 0.1,
-                  ease: EASE.outExpo,
-                }}
-              >
-                <span className="text-xs font-semibold tabular-nums text-accent">
-                  {item.number}
-                </span>
-
-                <div className="contact-offer-rail" aria-hidden="true">
-                  <span className="contact-offer-line" />
-                </div>
-
-                <div className="contact-offer-icon">
-                  <ServiceIcon name={item.icon} className="h-5 w-5" />
-                  <span className="contact-offer-icon-dot" aria-hidden="true" />
-                </div>
-
-                <div className="contact-offer-copy">
-                  <h3 className="text-sm font-semibold tracking-[0.15em] uppercase">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-secondary">
-                    {item.description}
-                  </p>
-                </div>
-              </motion.article>
-            ))}
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 export const ROUTES = {
   home: "/",
+  homeAlt: "/home",
   about: "/about",
   experience: "/experience",
   process: "/process",
@@ -9,6 +10,7 @@ export const ROUTES = {
 
 export const PATH_TO_SECTION: Record<string, string> = {
   [ROUTES.home]: "hero",
+  [ROUTES.homeAlt]: "hero",
   [ROUTES.about]: "about",
   [ROUTES.experience]: "experience",
   [ROUTES.process]: "process",
@@ -23,6 +25,11 @@ export const FULL_VIEW_SECTIONS = new Set([
   "process",
 ]);
 
+export function isHomePath(pathname: string): boolean {
+  return pathname === "/" || pathname === "/home" || pathname === "";
+}
+
 export function getSectionIdFromPath(pathname: string): string {
+  if (isHomePath(pathname)) return "hero";
   return PATH_TO_SECTION[pathname] ?? "hero";
 }

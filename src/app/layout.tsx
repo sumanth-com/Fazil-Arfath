@@ -80,6 +80,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-IN"
+      suppressHydrationWarning
       className={`${outfit.variable} ${cormorant.variable} splash-pending`}
     >
       <head>
@@ -90,11 +91,14 @@ export default function RootLayout({
         <meta name="ICBM" content={`${GEO.latitude}, ${GEO.longitude}`} />
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(sessionStorage.getItem("fazil-splash-seen")==="1"){document.documentElement.classList.remove("splash-pending");document.documentElement.classList.add("splash-ready");}}catch(e){document.documentElement.classList.remove("splash-pending");document.documentElement.classList.add("splash-ready");}`,
+            __html: `try{history.scrollRestoration="manual";var p=location.pathname;if(p==="/"||p===""||p==="/home"){window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;}if(sessionStorage.getItem("fazil-splash-seen")==="1"){document.documentElement.classList.remove("splash-pending");document.documentElement.classList.add("splash-ready");}}catch(e){document.documentElement.classList.remove("splash-pending");document.documentElement.classList.add("splash-ready");}`,
           }}
         />
       </head>
-      <body className="bg-bg font-sans text-primary antialiased">
+      <body
+        suppressHydrationWarning
+        className="bg-bg font-sans text-primary antialiased"
+      >
         <SmoothScroll>
           <GsapProvider>
             <AppShell>
@@ -103,7 +107,7 @@ export default function RootLayout({
               <SiteChrome>
                 <Header />
               </SiteChrome>
-              <main>{children}</main>
+              <main className="main-content pt-[var(--site-chrome)]">{children}</main>
               <Footer />
             </AppShell>
           </GsapProvider>

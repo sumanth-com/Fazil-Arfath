@@ -1,9 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { EXPERIENCE, EASE, SECTION_NUMBERS } from "@/lib/constants";
-import { COMPANY_LOGOS } from "@/lib/images";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 
@@ -12,7 +10,7 @@ export function Work() {
     <section
       id="experience"
       className="section-gap viewport-section relative"
-      aria-label="Work Experience"
+      aria-labelledby="experience-heading"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_45%_35%_at_12%_18%,rgba(255,59,48,0.05)_0%,transparent_60%)]" aria-hidden="true" />
 
@@ -20,7 +18,7 @@ export function Work() {
         <SectionLabel number={SECTION_NUMBERS.experience} />
 
         <div className="section-header section-header--split mb-5 shrink-0 lg:mb-6">
-          <h2 className="section-heading">
+          <h2 id="experience-heading" className="section-heading">
             <span className="section-heading-line">
               <span>WORK</span>
               <span className="text-accent">EXPERIENCE</span>
@@ -47,34 +45,20 @@ export function Work() {
                 }}
                 data-cursor="hover"
               >
-                <div className="mb-3 flex items-center justify-between gap-3">
-                  <div className="experience-card__logo">
-                    <Image
-                      src={COMPANY_LOGOS[job.logoKey]}
-                      alt={`${job.company} logo`}
-                      width={36}
-                      height={36}
-                      className="h-full w-full object-contain"
-                    />
-                  </div>
-                  <span className="label-caps text-[11px] text-secondary sm:text-xs">
+                <div className="experience-card__head mb-2 flex items-baseline justify-between gap-3">
+                  <h3 className="heading-poster min-w-0 text-left text-lg text-primary transition-colors duration-300 group-hover:text-accent sm:text-xl lg:text-2xl">
+                    {job.company}
+                  </h3>
+                  <span className="label-caps shrink-0 text-[11px] text-secondary sm:text-xs">
                     {job.period}
                   </span>
                 </div>
 
-                  <span className="label-caps mb-2 block text-[10px] sm:text-[11px]">
-                  {job.category}
-                </span>
-
-                <h3 className="heading-poster mb-1 text-lg text-primary transition-colors duration-300 group-hover:text-accent sm:text-xl lg:text-2xl">
-                  {job.company}
-                </h3>
-
-                <p className="mb-2 text-xs font-medium tracking-[0.1em] text-primary/75 uppercase sm:tracking-[0.12em]">
+                <p className="mb-2 text-left text-xs font-medium tracking-[0.1em] text-primary/75 uppercase sm:tracking-[0.12em]">
                   {job.role}
                 </p>
 
-                <p className="mt-auto text-xs leading-relaxed text-secondary line-clamp-3">
+                <p className="text-left text-xs leading-relaxed text-secondary line-clamp-3">
                   {job.description}
                 </p>
               </motion.article>

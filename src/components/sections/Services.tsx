@@ -12,13 +12,13 @@ export function Services() {
     <section
       id="services"
       className="section-gap section-padding relative scroll-mt-[var(--site-chrome)]"
-      aria-label="Services"
+      aria-labelledby="services-heading"
     >
       <div className="container-grid">
         <SectionLabel number={SECTION_NUMBERS.services} />
 
         <div className="section-header section-header--split mb-8 sm:mb-10 lg:mb-16">
-          <h2 className="section-heading">
+          <h2 id="services-heading" className="section-heading">
             <span className="section-heading-line">
               <span>CORE</span>
               <span className="text-accent">SERVICES</span>
@@ -34,40 +34,32 @@ export function Services() {
           {SERVICES.map((service, i) => (
             <Reveal key={service.number} delay={i * 0.12}>
               <motion.article
-                className="group relative border-t border-border pt-8"
+                className="service-card group relative overflow-hidden border-t border-border pt-6 sm:pt-8"
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 300, damping: 25 }}
               >
-                <div className="mb-6 flex items-center justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center border border-border text-accent transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-[0_0_25px_rgba(255,80,60,0.15)]">
+                <div className="service-card__head">
+                  <div className="service-card__icon" aria-hidden="true">
                     <ServiceIcon name={service.icon} className="h-5 w-5" />
                   </div>
-                  <span className="text-xs text-accent">{service.number}</span>
+                  <h3 className="service-card__title">{service.title}</h3>
+                  <span className="service-card__number">{service.number}</span>
                 </div>
 
-                <h3 className="mb-3 text-sm font-semibold tracking-[0.15em] uppercase">
-                  {service.title}
-                </h3>
-
-                <p className="mb-6 text-xs leading-relaxed text-secondary">
-                  {service.description}
-                </p>
+                <p className="service-card__description">{service.description}</p>
 
                 <motion.div
-                  className="mb-6 h-px w-12 bg-accent"
+                  className="service-card__line"
                   initial={{ width: 0 }}
                   whileInView={{ width: 48 }}
                   viewport={{ once: false }}
                   transition={{ duration: 0.8, delay: 0.3 + i * 0.1, ease: EASE.outExpo }}
                 />
 
-                <ul className="space-y-2">
+                <ul className="service-card__list">
                   {service.items.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-center gap-2 text-[10px] tracking-[0.12em] text-secondary uppercase"
-                    >
-                      <span className="h-1 w-1 rounded-full bg-accent" />
+                    <li key={item} className="service-card__list-item">
+                      <span className="service-card__bullet" aria-hidden="true" />
                       {item}
                     </li>
                   ))}

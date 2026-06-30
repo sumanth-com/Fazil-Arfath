@@ -12,14 +12,14 @@ export function About() {
     <section
       id="about"
       className="section-gap viewport-section relative"
-      aria-label="About"
+      aria-labelledby="about-heading"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_80%_20%,rgba(255,59,48,0.05)_0%,transparent_60%)]" aria-hidden="true" />
 
       <div className="container-grid relative z-10 flex flex-col py-4 sm:py-5 lg:min-h-0 lg:h-full lg:py-6">
         <SectionLabel number={SECTION_NUMBERS.about} />
 
-        <h2 className="section-heading section-header mb-4 shrink-0 sm:mb-6 lg:mb-8">
+        <h2 id="about-heading" className="section-heading section-header mb-4 shrink-0 sm:mb-6 lg:mb-8">
           <span className="section-heading-line">
             <span>{SITE.aboutHeading}</span>
             <span className="text-accent">{SITE.aboutHeadingAccent}</span>
@@ -27,7 +27,7 @@ export function About() {
         </h2>
 
         <div className="grid min-h-0 flex-1 items-start gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-          <div className="min-w-0 space-y-4">
+          <div className="min-w-0 space-y-4 max-lg:mx-auto max-lg:text-center">
             <Reveal delay={0.3}>
               <p className="max-w-2xl text-base leading-[1.75] text-secondary lg:text-lg">
                 I&apos;m{" "}
@@ -53,7 +53,7 @@ export function About() {
 
           <Reveal
             delay={0.2}
-            className="grid grid-cols-2 gap-x-5 gap-y-6 sm:gap-x-8 sm:gap-y-8 lg:gap-x-10 lg:gap-y-10 lg:border-l lg:border-border lg:pl-12 xl:pl-16"
+            className="about-stats grid grid-cols-2 gap-x-5 gap-y-6 sm:gap-x-8 sm:gap-y-8 lg:gap-x-10 lg:gap-y-10 lg:border-l lg:border-border lg:pl-12 xl:pl-16"
           >
             {STATS.map((stat, i) => (
               <motion.div
@@ -91,7 +91,7 @@ export function About() {
         </div>
 
         <Reveal delay={0.3} className="mt-auto shrink-0 border-t border-border pt-5">
-          <span className="label-caps mb-4 block text-xs">Tools &amp; Skills</span>
+          <h3 className="label-caps mb-4 block text-xs">Tools &amp; Skills</h3>
           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:gap-3">
             {TOOLS.map((tool, i) => (
               <motion.span

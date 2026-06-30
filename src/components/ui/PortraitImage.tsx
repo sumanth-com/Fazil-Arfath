@@ -58,7 +58,7 @@ export function PortraitImage({
       <div
         ref={ref}
         className={cn(
-          "relative flex h-full w-full items-center justify-center",
+          "relative flex h-auto w-full items-center justify-center lg:h-full",
           className
         )}
       >
@@ -66,7 +66,7 @@ export function PortraitImage({
           <div
             className={cn(
               "flex w-full items-center justify-center",
-              zoom && "scale-[1.12] sm:scale-[1.15] lg:scale-[1.2]"
+              zoom && "lg:scale-[1.2]"
             )}
             style={{ transformOrigin: "center center" }}
           >
@@ -77,7 +77,7 @@ export function PortraitImage({
               height={src.height}
               priority={priority}
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="h-auto max-h-[calc(100svh-var(--site-chrome)-0.5rem)] w-full object-contain object-center"
+              className="h-auto w-full max-w-full object-contain object-center lg:max-h-[calc(100svh-var(--site-chrome)-0.5rem)]"
             />
           </div>
         ) : (

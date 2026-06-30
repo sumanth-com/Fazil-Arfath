@@ -29,28 +29,31 @@ export function Hero() {
     <section
       ref={heroRef}
       id="hero"
-      className="hero-section section-gap relative"
+      className="hero-section section-gap relative max-lg:!mb-0"
       aria-label="Introduction"
     >
-      <div className="relative z-20 shrink-0">
+      <div className="relative z-20 hidden shrink-0 lg:block">
         <TopRibbon />
       </div>
 
       <div className="hero-body relative">
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0c0c0c] via-bg to-[#060606]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_18%_48%,rgba(255,80,60,0.14)_0%,transparent_60%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_35%_at_88%_25%,rgba(255,59,48,0.07)_0%,transparent_55%)]" />
+          <div className="absolute inset-0 hidden lg:block">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0c0c0c] via-bg to-[#060606]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_18%_48%,rgba(255,80,60,0.14)_0%,transparent_60%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_45%_35%_at_88%_25%,rgba(255,59,48,0.07)_0%,transparent_55%)]" />
+          </div>
+          <div className="hero-mobile-bg absolute inset-0 lg:hidden" />
         </div>
 
         <div className="container-grid relative z-10 h-full">
-          <div className="grid h-full items-center gap-4 sm:gap-6 lg:grid-cols-2 lg:gap-12 xl:gap-14">
+          <div className="hero-mobile-stack grid h-full min-h-0 items-stretch gap-0 pt-0 sm:gap-6 sm:pt-4 lg:grid-cols-2 lg:items-center lg:gap-12 lg:pt-0 xl:gap-14">
             <motion.div
-              className="relative order-1 flex h-full max-h-[40svh] min-h-[220px] items-center justify-center overflow-hidden sm:max-h-[44svh] lg:max-h-none lg:min-h-0"
+              className="hero-portrait-col relative order-1 flex w-full items-center justify-center overflow-hidden lg:mt-0 lg:h-full lg:overflow-hidden"
               initial={false}
               animate={{
                 opacity: show ? 1 : 0,
-                x: show ? 0 : -56,
+                x: 0,
                 scale: show ? 1 : 1.1,
                 filter: show ? "blur(0px)" : "blur(10px)",
               }}
@@ -61,7 +64,7 @@ export function Hero() {
               }}
             >
               <motion.div
-                className="pointer-events-none absolute inset-[8%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,90,60,0.22)_0%,transparent_68%)] blur-2xl"
+                className="pointer-events-none absolute inset-[8%] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,90,60,0.22)_0%,transparent_68%)] blur-2xl max-lg:opacity-40"
                 initial={false}
                 animate={{
                   opacity: show ? 1 : 0,
@@ -75,7 +78,7 @@ export function Hero() {
                 aria-hidden="true"
               />
               <motion.div
-                className="relative h-full w-full"
+                className="hero-portrait-wrap relative w-full lg:h-full"
                 initial={false}
                 animate={{
                   y: show ? 0 : 24,
@@ -93,14 +96,15 @@ export function Hero() {
                   priority
                   clean
                   zoom
+                  className="hero-portrait-media"
                 />
               </motion.div>
             </motion.div>
 
-            <div className="relative order-2 flex min-h-0 flex-col justify-center py-2 sm:py-3 lg:h-full lg:py-2 lg:pl-6 xl:pl-10">
-              <div className="flex w-full max-w-2xl flex-col">
+            <div className="hero-copy relative order-2 flex min-h-0 flex-col justify-start pb-1 pt-0 text-center sm:pb-6 sm:pt-2 lg:h-full lg:justify-center lg:py-2 lg:pb-0 lg:pl-6 lg:pt-0 lg:text-left xl:pl-10">
+              <div className="flex w-full max-w-2xl flex-col items-center lg:items-start">
                 <motion.p
-                  className="label-caps mb-3 text-xs text-accent sm:mb-4"
+                  className="label-caps mb-1.5 text-[0.65rem] text-accent sm:mb-4 sm:text-xs"
                   initial={false}
                   animate={{ opacity: show ? 1 : 0, y: show ? 0 : 12 }}
                   transition={{ duration: 0.8, delay: show ? 0.25 : 0, ease: EASE.outExpo }}
@@ -108,7 +112,7 @@ export function Hero() {
                   / {SITE.roleTitle}
                 </motion.p>
 
-                <h1 className="hero-display relative">
+                <h1 className="hero-display relative flex w-full justify-center lg:justify-start">
                   <CinematicName
                     firstName="FAZIL"
                     lastName="ARFATH"
@@ -117,7 +121,7 @@ export function Hero() {
                 </h1>
 
                 <motion.p
-                  className="mt-4 max-w-xl text-base leading-relaxed text-primary/90 sm:mt-5 sm:text-lg lg:text-xl"
+                  className="mt-2 max-w-xl text-sm leading-snug text-primary/90 sm:mt-5 sm:text-lg sm:leading-relaxed lg:text-xl"
                   initial={false}
                   animate={{ opacity: show ? 1 : 0, y: show ? 0 : 14 }}
                   transition={{ duration: 0.9, delay: show ? 0.95 : 0, ease: EASE.outExpo }}
@@ -126,7 +130,7 @@ export function Hero() {
                 </motion.p>
 
                 <motion.ul
-                  className="mt-4 flex flex-wrap gap-2 sm:mt-5 sm:gap-2.5"
+                  className="mt-2 flex flex-wrap justify-center gap-1.5 sm:mt-5 sm:gap-2.5 lg:justify-start"
                   initial={false}
                   animate={{ opacity: show ? 1 : 0, y: show ? 0 : 10 }}
                   transition={{ duration: 0.9, delay: show ? 1.15 : 0, ease: EASE.outExpo }}
@@ -135,7 +139,7 @@ export function Hero() {
                   {SITE.heroHighlights.map((item) => (
                     <li
                       key={item}
-                      className="border border-border px-3 py-1.5 text-xs font-semibold tracking-[0.1em] text-primary/85 uppercase sm:px-3.5 sm:py-2 sm:text-[11px] sm:tracking-[0.12em]"
+                      className="border border-border px-2.5 py-1 text-[10px] font-semibold tracking-[0.08em] text-primary/85 uppercase sm:px-3.5 sm:py-2 sm:text-[11px] sm:tracking-[0.12em]"
                     >
                       {item}
                     </li>
@@ -143,7 +147,7 @@ export function Hero() {
                 </motion.ul>
 
                 <motion.dl
-                  className="mt-5 space-y-3 border-t border-border pt-5 sm:mt-6 sm:space-y-4 sm:pt-6"
+                  className="mt-5 hidden space-y-3 border-t border-border pt-5 sm:mt-6 sm:space-y-4 sm:pt-6 lg:block"
                   initial={false}
                   animate={{ opacity: show ? 1 : 0, y: show ? 0 : 10 }}
                   transition={{ duration: 0.9, delay: show ? 1.35 : 0, ease: EASE.outExpo }}

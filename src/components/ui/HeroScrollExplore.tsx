@@ -45,7 +45,7 @@ export function HeroScrollExplore({ href = ROUTES.about }: HeroScrollExploreProp
       href={href}
       aria-label="Scroll to explore about section"
       data-cursor="hover"
-      className="fixed z-[90] flex h-11 w-11 min-h-11 min-w-11 items-center justify-center rounded-full border border-[#ff3b30]/50 bg-gradient-to-b from-[#1c1c1c] via-[#0a0a0a] to-[#140808] text-[#ff3b30] shadow-[0_8px_24px_rgba(0,0,0,0.55),0_0_20px_rgba(255,59,48,0.12)] transition-[border-color,box-shadow] duration-300 hover:border-[#ff3b30]/80 hover:shadow-[0_10px_28px_rgba(0,0,0,0.6),0_0_28px_rgba(255,59,48,0.22)] max-lg:bottom-[max(1.25rem,env(safe-area-inset-bottom))] max-lg:right-[max(1.25rem,env(safe-area-inset-right))] bottom-8 right-8"
+      className="fixed z-[90] flex h-10 w-10 min-h-10 min-w-10 items-center justify-center rounded-full border border-[#ff3b30]/50 bg-gradient-to-b from-[#1c1c1c] via-[#0a0a0a] to-[#140808] text-[#ff3b30] shadow-[0_8px_24px_rgba(0,0,0,0.55),0_0_20px_rgba(255,59,48,0.12)] transition-[border-color,box-shadow] duration-300 hover:border-[#ff3b30]/80 hover:shadow-[0_10px_28px_rgba(0,0,0,0.6),0_0_28px_rgba(255,59,48,0.22)] max-lg:bottom-[max(0.75rem,env(safe-area-inset-bottom))] max-lg:right-[max(0.75rem,env(safe-area-inset-right))] bottom-8 right-8"
       style={
         reducedMotion
           ? undefined

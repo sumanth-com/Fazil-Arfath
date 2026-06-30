@@ -6,6 +6,18 @@ function getChromeHeight() {
   return chrome?.offsetHeight ?? 72;
 }
 
+export function resetHomeScroll(lenis: Lenis | null) {
+  if (typeof window === "undefined") return;
+
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+
+  if (lenis) {
+    lenis.scrollTo(0, { immediate: true, force: true });
+  }
+}
+
 function getViewportSectionScrollY(target: HTMLElement) {
   const chrome = getChromeHeight();
   return Math.round(
@@ -21,11 +33,7 @@ export function scrollToSectionId(
   const immediate = options?.immediate ?? false;
 
   if (sectionId === "hero") {
-    if (lenis) {
-      lenis.scrollTo(0, { immediate, lock: !immediate });
-    } else {
-      window.scrollTo({ top: 0, behavior: immediate ? "auto" : "smooth" });
-    }
+    resetHomeScroll(lenis);
     return;
   }
 

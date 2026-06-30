@@ -11,20 +11,30 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### If you see a 500 error
+### Stable dev server (important)
 
-This usually means a stale cache or multiple dev servers running. Fix it with:
+`npm run dev` now automatically:
+- Stops **all stale servers** on ports 3000–3005
+- Clears the `.next` cache (fixes `Cannot find module './611.js'` errors)
+- Starts Next.js with **Turbopack** (more stable on Windows)
+
+If you still see a 500 / broken unstyled page:
 
 ```bash
-npm run dev:clean
+npm run doctor
+npm run dev
 ```
 
-Then open the URL shown in the terminal (e.g. `http://localhost:3000`).
+**Never do this while `npm run dev` is running:**
+- `npm run build`
+- Starting a second `npm run dev` in another terminal
 
-**Tips to keep the server stable:**
-- Run only **one** `npm run dev` at a time
-- Don't run `npm run build` while the dev server is running
-- Replace photos in `assets/fazil.png` only — the app imports from there automatically
+Those leave corrupted webpack chunks and cause Internal Server Error.
+
+**Tips:**
+- Run only **one** dev server at a time
+- Always use `http://localhost:3000` (check the terminal URL)
+- Hard refresh after restart: `Ctrl+Shift+R`
 
 ## Stack
 
