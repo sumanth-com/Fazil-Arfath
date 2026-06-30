@@ -7,30 +7,44 @@ import {
   useMotionValueEvent,
   useTransform,
   animate,
-  AnimatePresence,
 } from "framer-motion";
 import { EASE, SITE } from "@/lib/constants";
 import { BRAND_LAYOUT_ID, SPLASH_LOAD_MS } from "@/lib/splash";
 import { useSplash } from "@/contexts/SplashContext";
 
-const LETTERS = ["F", "A", "Z", "I", "L"] as const;
+const BRAND_CHARS = SITE.name.split("");
 
-function SplashFazil({ progress }: { progress: number }) {
+const brandSpring = {
+  type: "spring" as const,
+  stiffness: 260,
+  damping: 32,
+  mass: 1,
+};
+
+function SplashBrandLetters({ progress }: { progress: number }) {
   return (
-    <h1 className="logo-text splash-brand-title" aria-hidden="true">
-      {LETTERS.map((char, i) => {
-        const start = i * 0.13;
-        const fill = Math.min(1, Math.max(0, (progress - start) / 0.24));
-        const y = (1 - fill) * 36;
-        const scale = 0.82 + fill * 0.18;
-        const blur = (1 - fill) * 6;
+    <>
+      {BRAND_CHARS.map((char, i) => {
+        if (char === " ") {
+          return (
+            <span key={`space-${i}`} className="splash-brand-space">
+              {" "}
+            </span>
+          );
+        }
+
+        const start = i * 0.1;
+        const fill = Math.min(1, Math.max(0, (progress - start) / 0.22));
+        const y = (1 - fill) * 32;
+        const scale = 0.84 + fill * 0.16;
+        const blur = (1 - fill) * 5;
 
         return (
           <span
             key={`${char}-${i}`}
             className="splash-brand-char"
             style={{
-              opacity: 0.12 + fill * 0.88,
+              opacity: 0.1 + fill * 0.9,
               transform: `translateY(${y}px) scale(${scale})`,
               filter: `blur(${blur}px)`,
             }}
@@ -39,22 +53,22 @@ function SplashFazil({ progress }: { progress: number }) {
           </span>
         );
       })}
-    </h1>
+    </>
   );
 }
 
-const brandSpring = {
-  type: "spring" as const,
-  stiffness: 320,
-  damping: 36,
-  mass: 0.9,
-};
-
 export function IntroSplash() {
-  const { phase, complete } = useSplash();
+  const { complete } = useSplash();
   const progress = useMotionValue(0);
   const [loadProgress, setLoadProgress] = useState(0);
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      return sessionStorage.getItem("fazil-splash-seen") !== "1";
+    } catch {
+      return false;
+    }
+  });
 
   const progressPercent = useTransform(progress, (v) => `${Math.round(v * 100)}%`);
 
@@ -63,12 +77,6 @@ export function IntroSplash() {
   useEffect(() => {
     if (!complete) setShow(true);
   }, [complete]);
-
-  useEffect(() => {
-    if (!complete || !show) return;
-    const timer = window.setTimeout(() => setShow(false), 650);
-    return () => window.clearTimeout(timer);
-  }, [complete, show]);
 
   useEffect(() => {
     if (complete) return;
@@ -81,6 +89,12 @@ export function IntroSplash() {
     return () => controls.stop();
   }, [complete, progress]);
 
+  useEffect(() => {
+    if (!complete || !show) return;
+    const timer = window.setTimeout(() => setShow(false), 700);
+    return () => window.clearTimeout(timer);
+  }, [complete, show]);
+
   if (!show) return null;
 
   return (
@@ -88,7 +102,8 @@ export function IntroSplash() {
       className="splash-screen"
       initial={{ opacity: 1 }}
       animate={{ opacity: complete ? 0 : 1 }}
-      transition={{ duration: 0.45, ease: EASE.outExpo, delay: complete ? 0.28 : 0 }}
+      transition={{ duration: 0.5, ease: EASE.outExpo, delay: complete ? 0.35 : 0 }}
+      aria-hidden={complete}
     >
       <div className="splash-screen__bg" />
       <div className="splash-screen__glow splash-screen__glow--left" />
@@ -96,48 +111,20 @@ export function IntroSplash() {
       <div className="splash-screen__grain" />
 
       <div className="splash-screen__stage">
-        <AnimatePresence mode="wait">
-          {phase === "loading" && (
-            <motion.div
-              key="fazil"
-              className="splash-screen__word"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, scale: 0.94, filter: "blur(10px)" }}
-              transition={{ duration: 0.35, ease: EASE.outExpo }}
-            >
-              <SplashFazil progress={loadProgress} />
-              <div className="splash-screen__loader-track" aria-hidden="true">
-                <motion.span
-                  className="splash-screen__loader-fill"
-                  style={{ scaleX: progress }}
-                />
-              </div>
-            </motion.div>
-          )}
-
-          {phase === "exit" && !complete && (
-            <motion.span
-              key="mr"
-              layoutId={BRAND_LAYOUT_ID}
-              className="logo-text splash-brand-hero"
-              initial={{ opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                layout: brandSpring,
-                opacity: { duration: 0.35, ease: EASE.outExpo },
-                scale: { duration: 0.35, ease: EASE.outExpo },
-              }}
-            >
-              {SITE.name}
-            </motion.span>
-          )}
-        </AnimatePresence>
+        {!complete && (
+          <motion.span
+            layoutId={BRAND_LAYOUT_ID}
+            className="logo-text splash-brand-hero"
+            transition={{ layout: brandSpring }}
+          >
+            <SplashBrandLetters progress={loadProgress} />
+          </motion.span>
+        )}
       </div>
 
       <motion.p
         className="splash-screen__caption label-caps"
-        animate={{ opacity: phase === "loading" ? 0.6 : 0 }}
+        animate={{ opacity: complete ? 0 : 0.6 }}
         transition={{ duration: 0.35 }}
       >
         Loading

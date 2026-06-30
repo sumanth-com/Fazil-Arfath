@@ -54,8 +54,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${cormorant.variable}`}
+      className={`${outfit.variable} ${cormorant.variable} splash-pending`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(sessionStorage.getItem("fazil-splash-seen")==="1"){document.documentElement.classList.remove("splash-pending");document.documentElement.classList.add("splash-ready");}}catch(e){document.documentElement.classList.remove("splash-pending");document.documentElement.classList.add("splash-ready");}`,
+          }}
+        />
+      </head>
       <body className="bg-bg font-sans text-primary antialiased">
         <JsonLd />
         <SmoothScroll>

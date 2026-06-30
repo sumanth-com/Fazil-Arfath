@@ -12,9 +12,9 @@ import { useSplash } from "@/contexts/SplashContext";
 
 const brandSpring = {
   type: "spring" as const,
-  stiffness: 320,
-  damping: 36,
-  mass: 0.9,
+  stiffness: 260,
+  damping: 32,
+  mass: 1,
 };
 
 export function Header() {
@@ -44,7 +44,7 @@ export function Header() {
         )}
         initial={false}
         animate={{ opacity: complete ? 1 : 0 }}
-        transition={{ duration: 0.45, ease: EASE.outExpo, delay: complete ? 0.42 : 0 }}
+        transition={{ duration: 0.4, ease: EASE.outExpo, delay: complete ? 0.5 : 0 }}
       >
         <div className="container-grid relative flex items-center py-4 md:py-5">
           <Link

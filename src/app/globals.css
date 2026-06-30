@@ -933,6 +933,15 @@
     overflow: hidden;
   }
 
+  html.splash-pending #site-content {
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  html.splash-pending body {
+    overflow: hidden;
+  }
+
   body.splash-active .lenis.lenis-smooth {
     overflow: hidden !important;
   }
@@ -940,7 +949,7 @@
   .splash-screen {
     position: fixed;
     inset: 0;
-    z-index: 200;
+    z-index: 9999;
     display: grid;
     place-items: center;
     overflow: hidden;
@@ -1006,11 +1015,12 @@
     gap: 1.5rem;
   }
 
-  .splash-brand-title,
   .splash-brand-hero {
     margin: 0;
+    display: inline-flex;
+    align-items: baseline;
     font-weight: 800;
-    font-size: clamp(3.25rem, 11vw, 6.5rem);
+    font-size: clamp(3rem, 10vw, 5.75rem);
     line-height: 1;
     letter-spacing: 0.04em;
     white-space: nowrap;
@@ -1018,6 +1028,11 @@
     text-shadow:
       0 0 48px rgba(255, 255, 255, 0.18),
       0 0 72px rgba(255, 59, 48, 0.12);
+  }
+
+  .splash-brand-space {
+    display: inline-block;
+    width: 0.28em;
   }
 
   .splash-brand-char {

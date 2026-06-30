@@ -9,9 +9,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <SplashProvider>
       <LayoutGroup id="site-brand">
-        <SectionScroll />
         <IntroSplash />
-        {children}
+        <div id="site-content">{children}</div>
+        <SectionScroll />
       </LayoutGroup>
     </SplashProvider>
   );

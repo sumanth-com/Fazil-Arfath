@@ -21,10 +21,29 @@ const SplashContext = createContext<SplashContextValue | null>(null);
 
 const SPLASH_KEY = "fazil-splash-seen";
 
+function markSplashReady() {
+  document.documentElement.classList.remove("splash-pending");
+  document.documentElement.classList.add("splash-ready");
+}
+
 export function SplashProvider({ children }: { children: React.ReactNode }) {
   const reducedMotion = useReducedMotion();
-  const [phase, setPhase] = useState<SplashPhase>("loading");
-  const [skipped, setSkipped] = useState(false);
+  const [phase, setPhase] = useState<SplashPhase>(() => {
+    if (typeof window === "undefined") return "loading";
+    try {
+      return sessionStorage.getItem(SPLASH_KEY) === "1" ? "complete" : "loading";
+    } catch {
+      return "loading";
+    }
+  });
+  const [skipped, setSkipped] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      return sessionStorage.getItem(SPLASH_KEY) === "1";
+    } catch {
+      return false;
+    }
+  });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -32,6 +51,7 @@ export function SplashProvider({ children }: { children: React.ReactNode }) {
     if (reducedMotion || sessionStorage.getItem(SPLASH_KEY) === "1") {
       setSkipped(true);
       setPhase("complete");
+      markSplashReady();
       return;
     }
 
@@ -42,6 +62,7 @@ export function SplashProvider({ children }: { children: React.ReactNode }) {
       setPhase("complete");
       sessionStorage.setItem(SPLASH_KEY, "1");
       document.body.classList.remove("splash-active");
+      markSplashReady();
     }, SPLASH_EXIT_MS);
 
     return () => {

@@ -51,7 +51,7 @@ export function Contact() {
                   variant="pill3d"
                   size="sm"
                 >
-                  Email Me
+                  Mail Me
                 </Button>
                 <span className="contact-channel-location label-caps flex items-center gap-2.5">
                   <LocationPinIcon3D />
