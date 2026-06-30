@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Cormorant } from "next/font/google";
+import { AppShell } from "@/components/layout/AppShell";
 import { Header } from "@/components/layout/Header";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { Footer } from "@/components/layout/Footer";
@@ -59,13 +60,15 @@ export default function RootLayout({
         <JsonLd />
         <SmoothScroll>
           <GsapProvider>
-            <CustomCursor />
-            <ScrollProgress />
-            <SiteChrome>
-              <Header />
-            </SiteChrome>
-            <main>{children}</main>
-            <Footer />
+            <AppShell>
+              <CustomCursor />
+              <ScrollProgress />
+              <SiteChrome>
+                <Header />
+              </SiteChrome>
+              <main>{children}</main>
+              <Footer />
+            </AppShell>
           </GsapProvider>
         </SmoothScroll>
       </body>

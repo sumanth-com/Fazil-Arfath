@@ -1,16 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { NAV_LINKS, SITE } from "@/lib/constants";
-import { EASE } from "@/lib/constants";
+import { NAV_LINKS, SITE, EASE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
+import { useSplash } from "@/contexts/SplashContext";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const brandRef = useRef<HTMLSpanElement>(null);
+  const { complete, registerBrandAnchor } = useSplash();
+
+  useEffect(() => {
+    registerBrandAnchor(brandRef.current);
+    return () => registerBrandAnchor(null);
+  }, [registerBrandAnchor]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -32,18 +39,30 @@ export function Header() {
           "transition-colors duration-500",
           scrolled ? "bg-bg/90 backdrop-blur-xl" : "bg-bg/80 backdrop-blur-md"
         )}
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: EASE.outExpo, delay: 0.3 }}
+        initial={false}
+        animate={{
+          opacity: complete ? 1 : 0,
+          y: complete ? 0 : -12,
+        }}
+        transition={{ duration: 0.5, ease: EASE.outExpo, delay: complete ? 0.05 : 0 }}
       >
         <div className="container-grid relative flex items-center py-4 md:py-5">
           <Link
             href="#"
-            className="logo-text relative z-10 shrink-0 text-lg md:text-xl"
+            className="relative z-10 shrink-0"
             data-cursor="hover"
             aria-label={`${SITE.name} home`}
           >
-            {SITE.name}
+            <span
+              ref={brandRef}
+              id="nav-brand-anchor"
+              className={cn(
+                "logo-text inline-block text-lg md:text-xl",
+                !complete && "pointer-events-none opacity-0"
+              )}
+            >
+              {SITE.name}
+            </span>
           </Link>
 
           <nav
@@ -53,11 +72,11 @@ export function Header() {
             {NAV_LINKS.map((link, i) => (
               <motion.div
                 key={link.href}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={false}
+                animate={{ opacity: complete ? 1 : 0, y: complete ? 0 : -8 }}
                 transition={{
-                  delay: 0.5 + i * 0.08,
-                  duration: 0.8,
+                  delay: complete ? 0.15 + i * 0.06 : 0,
+                  duration: 0.7,
                   ease: EASE.outExpo,
                 }}
               >
@@ -65,6 +84,7 @@ export function Header() {
                   href={link.href}
                   className="label-caps whitespace-nowrap text-primary/80 transition-colors duration-300 hover:text-accent"
                   data-cursor="hover"
+                  tabIndex={complete ? 0 : -1}
                 >
                   {link.label}
                 </Link>
@@ -73,9 +93,15 @@ export function Header() {
           </nav>
 
           <div className="relative z-10 ml-auto hidden shrink-0 lg:block">
-            <Button href="#contact" variant="pill3d" size="sm">
-              {SITE.ctaLabel}
-            </Button>
+            <motion.div
+              initial={false}
+              animate={{ opacity: complete ? 1 : 0, y: complete ? 0 : -8 }}
+              transition={{ delay: complete ? 0.45 : 0, duration: 0.7, ease: EASE.outExpo }}
+            >
+              <Button href="#contact" variant="pill3d" size="sm">
+                {SITE.ctaLabel}
+              </Button>
+            </motion.div>
           </div>
 
           <button
@@ -84,6 +110,7 @@ export function Header() {
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             data-cursor="hover"
+            tabIndex={complete ? 0 : -1}
           >
             <motion.span
               className="block h-px w-6 bg-primary"
@@ -102,7 +129,7 @@ export function Header() {
       </motion.header>
 
       <AnimatePresence>
-        {menuOpen && (
+        {menuOpen && complete && (
           <motion.div
             className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-bg/95 backdrop-blur-2xl lg:hidden"
             initial={{ opacity: 0 }}
