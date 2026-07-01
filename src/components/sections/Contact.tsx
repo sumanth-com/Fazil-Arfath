@@ -48,7 +48,7 @@ export function Contact() {
                   </span>
                   <span className="contact-heading-line contact-heading-line--accent">
                     <motion.span
-                      className="contact-heading-word heading-serif text-accent"
+                      className="contact-heading-word contact-heading-word--accent text-accent"
                       initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
                       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                       viewport={{ once: false }}

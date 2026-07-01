@@ -811,6 +811,13 @@
     display: block;
   }
 
+  .contact-heading-word--accent {
+    font-family: var(--font-display), sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
   @media (max-width: 1023px) {
     .contact-heading-display {
       font-size: clamp(1.35rem, 6vw, 2rem);
@@ -819,28 +826,25 @@
     }
 
     #contact .contact-heading-inner {
-      display: inline-flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 0.2em 0.35em;
-      white-space: normal;
+      gap: 0;
     }
 
     #contact .contact-heading-line {
-      display: inline;
+      display: block;
+      line-height: 1.05;
     }
 
     #contact .contact-heading-word,
     #contact .contact-heading-word > span,
     #contact .contact-heading-word > span > span {
-      display: inline-block !important;
+      display: block !important;
     }
 
-    #contact .contact-heading-line--accent .heading-serif {
-      font-family: var(--font-display), sans-serif;
-      font-style: normal;
-      font-weight: 700;
+    #contact .contact-heading-line--accent {
+      line-height: 1.05;
     }
   }
 
@@ -872,11 +876,6 @@
     .contact-heading-line--accent {
       line-height: 0.95;
       margin-top: -0.02em;
-    }
-
-    .contact-heading-line--accent .heading-serif {
-      letter-spacing: 0.02em;
-      text-transform: none;
     }
   }
 
