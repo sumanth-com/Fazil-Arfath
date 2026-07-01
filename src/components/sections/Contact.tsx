@@ -32,17 +32,17 @@ export function Contact() {
               <h2 id="contact-heading" className="contact-heading-display section-header mb-4 sm:mb-6">
                 <span className="contact-heading-inner">
                   <span className="contact-heading-line">
-                    <TextReveal as="span" className="contact-heading-word">
+                    <TextReveal as="span" className="contact-heading-word" inline>
                       LET&apos;S
                     </TextReveal>
                   </span>
                   <span className="contact-heading-line">
-                    <TextReveal as="span" className="contact-heading-word" delay={0.06}>
+                    <TextReveal as="span" className="contact-heading-word" delay={0.06} inline>
                       MAKE
                     </TextReveal>
                   </span>
                   <span className="contact-heading-line">
-                    <TextReveal as="span" className="contact-heading-word" delay={0.12}>
+                    <TextReveal as="span" className="contact-heading-word" delay={0.12} inline>
                       SOME
                     </TextReveal>
                   </span>

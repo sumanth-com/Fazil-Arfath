@@ -820,24 +820,25 @@
 
   @media (max-width: 1023px) {
     .contact-heading-display {
-      font-size: clamp(1.1rem, 5.2vw, 1.75rem);
-      letter-spacing: 0.025em;
+      font-size: clamp(1rem, 4.8vw, 1.65rem);
+      letter-spacing: 0.02em;
       line-height: 1;
       text-align: center;
+      width: 100%;
     }
 
     #contact .contact-heading-inner {
-      display: inline-flex;
-      flex-wrap: nowrap;
+      display: flex;
+      flex-flow: row nowrap;
       justify-content: center;
       align-items: baseline;
-      gap: 0.28em;
-      white-space: nowrap;
+      gap: 0.3em;
+      width: 100%;
       max-width: 100%;
     }
 
     #contact .contact-heading-line {
-      display: inline;
+      display: contents;
       line-height: 1;
     }
 
@@ -845,9 +846,19 @@
     #contact .contact-heading-word > span,
     #contact .contact-heading-word > span > span {
       display: inline-block !important;
+      vertical-align: baseline;
+      line-height: 1 !important;
+      overflow: visible !important;
+    }
+
+    #contact .contact-heading-word--accent {
+      display: inline-block !important;
+      vertical-align: baseline;
+      line-height: 1 !important;
     }
 
     #contact .contact-heading-line--accent {
+      display: contents;
       line-height: 1;
     }
   }
