@@ -820,31 +820,35 @@
 
   @media (max-width: 1023px) {
     .contact-heading-display {
-      font-size: clamp(1.35rem, 6vw, 2rem);
-      letter-spacing: 0.03em;
-      line-height: 1.08;
+      font-size: clamp(1.1rem, 5.2vw, 1.75rem);
+      letter-spacing: 0.025em;
+      line-height: 1;
+      text-align: center;
     }
 
     #contact .contact-heading-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
+      display: inline-flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: baseline;
+      gap: 0.28em;
+      white-space: nowrap;
+      max-width: 100%;
     }
 
     #contact .contact-heading-line {
-      display: block;
-      line-height: 1.05;
+      display: inline;
+      line-height: 1;
     }
 
     #contact .contact-heading-word,
     #contact .contact-heading-word > span,
     #contact .contact-heading-word > span > span {
-      display: block !important;
+      display: inline-block !important;
     }
 
     #contact .contact-heading-line--accent {
-      line-height: 1.05;
+      line-height: 1;
     }
   }
 

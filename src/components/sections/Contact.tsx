@@ -26,7 +26,7 @@ export function Contact() {
       <div className="container-grid relative z-10 flex flex-col py-4 sm:py-5 lg:py-6 lg:pb-8">
         <div className="contact-layout min-h-0 flex-1">
           <div className="contact-left">
-            <div className="contact-intro max-lg:text-center">
+            <div className="contact-intro max-lg:text-center max-lg:flex max-lg:flex-col max-lg:items-center">
               <SectionLabel number={SECTION_NUMBERS.contact} />
 
               <h2 id="contact-heading" className="contact-heading-display section-header mb-4 sm:mb-6">
