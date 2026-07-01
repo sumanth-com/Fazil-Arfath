@@ -51,7 +51,7 @@ export function Hero() {
         <div className="container-grid relative z-10 h-full">
           <div className="hero-mobile-stack grid h-full min-h-0 items-stretch gap-0 pt-0 sm:gap-6 sm:pt-4 lg:grid-cols-2 lg:items-center lg:gap-12 lg:pt-0 xl:gap-14">
             <motion.div
-              className="hero-portrait-col relative order-1 flex w-full items-center justify-center overflow-hidden lg:mt-0 lg:h-full lg:overflow-hidden"
+              className="hero-portrait-col relative order-1 flex w-full items-center justify-center overflow-hidden lg:order-1 lg:mt-0 lg:h-full lg:overflow-hidden"
               initial={false}
               animate={{
                 opacity: show ? 1 : 0,
@@ -103,7 +103,7 @@ export function Hero() {
               </motion.div>
             </motion.div>
 
-            <div className="hero-copy relative order-2 flex min-h-0 flex-col justify-start pb-1 pt-0 text-center sm:pb-6 sm:pt-2 lg:h-full lg:justify-center lg:py-2 lg:pb-0 lg:pl-6 lg:pt-0 lg:text-left xl:pl-10">
+            <div className="hero-copy relative order-2 flex min-h-0 flex-col justify-start pb-1 pt-0 text-center sm:pb-6 sm:pt-2 lg:order-2 lg:h-full lg:justify-center lg:py-2 lg:pb-0 lg:pl-6 lg:pt-0 lg:text-left xl:pl-10">
               <div className="flex w-full max-w-2xl flex-col items-center lg:items-start">
                 <motion.p
                   className="label-caps mb-1.5 text-[0.65rem] text-primary sm:mb-4 sm:text-xs"

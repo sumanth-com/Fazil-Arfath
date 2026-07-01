@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { NAV_LINKS, SITE, EASE } from "@/lib/constants";
-import { ROUTES } from "@/lib/routes";
+import { ROUTES, getSectionIdFromPath } from "@/lib/routes";
 import { BRAND_LAYOUT_ID } from "@/lib/splash";
+import { scrollToSectionWhenReady } from "@/lib/scroll";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { useSplash } from "@/contexts/SplashContext";
@@ -21,11 +23,69 @@ const brandSpring = {
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [animatedMenuClose, setAnimatedMenuClose] = useState(true);
   const { complete } = useSplash();
   const lenis = useLenis();
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const closeMenu = () => setMenuOpen(false);
-  const toggleMenu = () => setMenuOpen((open) => !open);
+  const unlockBody = useCallback(() => {
+    document.body.style.overflow = "";
+    document.body.classList.remove("menu-open");
+  }, []);
+
+  const closeMenu = useCallback(
+    (animated = true) => {
+      setAnimatedMenuClose(animated);
+      unlockBody();
+      setMenuOpen(false);
+
+      if (!animated) {
+        document.documentElement.classList.add("mobile-nav-instant");
+        window.setTimeout(() => {
+          document.documentElement.classList.remove("mobile-nav-instant");
+        }, 50);
+        lenis?.start();
+        return;
+      }
+
+      lenis?.start();
+    },
+    [lenis, unlockBody]
+  );
+
+  const openMenu = useCallback(() => {
+    setAnimatedMenuClose(true);
+    setMenuOpen(true);
+    lenis?.stop();
+  }, [lenis]);
+
+  const handleMobileNav = useCallback(
+    (href: string) => {
+      const sectionId = getSectionIdFromPath(href);
+      closeMenu(false);
+
+      if (pathname === href) {
+        requestAnimationFrame(() => {
+          scrollToSectionWhenReady(sectionId, lenis, { immediate: false });
+        });
+        return;
+      }
+
+      router.push(href);
+    },
+    [closeMenu, lenis, pathname, router]
+  );
+
+  const toggleMenu = () => {
+    if (menuOpen) closeMenu(true);
+    else openMenu();
+  };
+
+  const hamburgerTransition = {
+    duration: animatedMenuClose ? 0.25 : 0,
+    ease: EASE.outExpo,
+  };
 
   useEffect(() => {
     const updateScrolled = (scrollY: number) => {
@@ -51,7 +111,7 @@ export function Header() {
     if (!menuOpen) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeMenu();
+      if (event.key === "Escape") closeMenu(true);
     };
 
     document.body.style.overflow = "hidden";
@@ -59,17 +119,15 @@ export function Header() {
 
     window.addEventListener("keydown", onKeyDown);
     return () => {
-      document.body.style.overflow = "";
-      document.body.classList.remove("menu-open");
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [menuOpen]);
+  }, [menuOpen, closeMenu]);
 
   return (
     <>
       <motion.header
         className={cn(
-          "relative z-50 w-full border-b transition-[background-color,border-color,backdrop-filter] duration-500",
+          "site-header relative z-50 w-full border-b transition-[background-color,border-color,backdrop-filter] duration-500",
           scrolled
             ? "border-border/80 bg-bg/95 backdrop-blur-xl"
             : "border-transparent bg-bg/80 backdrop-blur-md"
@@ -84,7 +142,7 @@ export function Header() {
             className="relative z-10 shrink-0"
             data-cursor="hover"
             aria-label={`${SITE.name} home`}
-            onClick={closeMenu}
+            onClick={() => closeMenu(true)}
           >
             {complete ? (
               <motion.span
@@ -159,17 +217,21 @@ export function Header() {
             <motion.span
               className="block h-px w-6 bg-primary"
               animate={menuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.25, ease: EASE.outExpo }}
+              transition={hamburgerTransition}
             />
             <motion.span
               className="block h-px w-6 bg-primary"
               animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-              transition={{ duration: 0.2 }}
+              transition={
+                menuOpen && animatedMenuClose
+                  ? { duration: 0.2 }
+                  : { duration: animatedMenuClose ? 0.2 : 0 }
+              }
             />
             <motion.span
               className="block h-px w-6 bg-primary"
               animate={menuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.25, ease: EASE.outExpo }}
+              transition={hamburgerTransition}
             />
           </button>
         </div>
@@ -178,20 +240,19 @@ export function Header() {
       <AnimatePresence>
         {menuOpen && complete && (
           <motion.div
+            key="mobile-nav-overlay"
             className="mobile-nav-overlay fixed inset-x-0 bottom-0 top-[var(--site-chrome)] z-[80] lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            exit={{
+              opacity: 0,
+              transition: { duration: animatedMenuClose ? 0.3 : 0, ease: EASE.outExpo },
+            }}
             transition={{ duration: 0.35, ease: EASE.outExpo }}
-            onClick={closeMenu}
+            onClick={() => closeMenu(true)}
             aria-hidden={!menuOpen}
           >
-            <motion.div
-              className="mobile-nav-backdrop absolute inset-0 bg-bg/92 backdrop-blur-2xl"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            />
+            <div className="mobile-nav-backdrop absolute inset-0 bg-bg/92 backdrop-blur-2xl" />
 
             <nav
               id="mobile-nav"
@@ -204,15 +265,17 @@ export function Header() {
                   <motion.li
                     key={link.href}
                     className="w-full"
-                    initial={{ opacity: 0, y: 24 }}
+                    initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 16 }}
-                    transition={{ delay: 0.05 + i * 0.07, duration: 0.45, ease: EASE.outExpo }}
+                    transition={{ delay: 0.04 + i * 0.05, duration: 0.4, ease: EASE.outExpo }}
                   >
                     <Link
                       href={link.href}
                       className="mobile-nav-link heading-poster py-3.5 text-[1.65rem] leading-none text-primary transition-colors hover:text-accent sm:text-4xl"
-                      onClick={closeMenu}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        handleMobileNav(link.href);
+                      }}
                       data-cursor="hover"
                     >
                       {link.label}
@@ -223,12 +286,18 @@ export function Header() {
 
               <motion.div
                 className="mt-12 flex w-full justify-center"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 12 }}
-                transition={{ delay: 0.4, duration: 0.45, ease: EASE.outExpo }}
+                transition={{ delay: 0.32, duration: 0.4, ease: EASE.outExpo }}
               >
-                <Button href={ROUTES.contact} variant="pill3d" onClick={closeMenu}>
+                <Button
+                  href={ROUTES.contact}
+                  variant="pill3d"
+                  onClick={(event) => {
+                    event.preventDefault();
+                    handleMobileNav(ROUTES.contact);
+                  }}
+                >
                   {SITE.ctaLabel}
                 </Button>
               </motion.div>

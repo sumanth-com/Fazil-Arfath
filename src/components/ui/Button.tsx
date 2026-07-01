@@ -9,7 +9,7 @@ type ButtonSize = "sm" | "md" | "lg";
 interface ButtonProps {
   children: React.ReactNode;
   href?: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
   variant?: ButtonVariant;
   size?: ButtonSize;
   className?: string;
@@ -64,7 +64,12 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classes} data-cursor="hover">
+      <Link
+        href={href}
+        className={classes}
+        onClick={onClick}
+        data-cursor="hover"
+      >
         {content}
       </Link>
     );

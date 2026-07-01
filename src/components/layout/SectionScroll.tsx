@@ -81,11 +81,11 @@ export function SectionScroll() {
     const timers: number[] = [];
 
     if (immediate) {
-      for (const ms of [50, 150, 350, 700]) {
+      for (const ms of [50, 150, 350]) {
         timers.push(window.setTimeout(() => applyScroll(true), ms));
       }
     } else {
-      timers.push(window.setTimeout(() => applyScroll(false), 80));
+      timers.push(window.setTimeout(() => applyScroll(false), 120));
     }
 
     return () => timers.forEach((timer) => window.clearTimeout(timer));

@@ -23,6 +23,8 @@ export const FULL_VIEW_SECTIONS = new Set([
   "about",
   "experience",
   "process",
+  "services",
+  "contact",
 ]);
 
 export function isHomePath(pathname: string): boolean {

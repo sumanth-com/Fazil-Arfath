@@ -11,10 +11,10 @@ export function Services() {
   return (
     <section
       id="services"
-      className="section-gap section-padding relative scroll-mt-[var(--site-chrome)]"
+      className="services-section section-gap relative"
       aria-labelledby="services-heading"
     >
-      <div className="container-grid">
+      <div className="container-grid relative z-10 flex flex-col py-4 sm:py-5 lg:py-6">
         <SectionLabel number={SECTION_NUMBERS.services} />
 
         <div className="section-header section-header--split mb-8 sm:mb-10 lg:mb-16">

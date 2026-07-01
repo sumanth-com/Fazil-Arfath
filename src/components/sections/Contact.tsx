@@ -15,7 +15,7 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="section-padding relative scroll-mt-[var(--site-chrome)] overflow-hidden"
+      className="contact-section relative"
       aria-labelledby="contact-heading"
     >
       <div
@@ -23,18 +23,40 @@ export function Contact() {
         aria-hidden="true"
       />
 
-      <div className="container-grid relative z-10">
-        <div className="contact-layout">
+      <div className="container-grid relative z-10 flex flex-col py-4 sm:py-5 lg:py-6 lg:pb-8">
+        <div className="contact-layout min-h-0 flex-1">
           <div className="contact-left">
             <div className="contact-intro max-lg:text-center">
               <SectionLabel number={SECTION_NUMBERS.contact} />
 
-              <h2 id="contact-heading" className="section-heading section-header mb-4 sm:mb-6">
-                <span className="section-heading-line">
-                  <TextReveal as="span" inline>
-                    LET&apos;S GROW
-                  </TextReveal>
-                  <span className="text-accent">TOGETHER</span>
+              <h2 id="contact-heading" className="contact-heading-display section-header mb-4 sm:mb-6">
+                <span className="contact-heading-inner">
+                  <span className="contact-heading-line">
+                    <TextReveal as="span" className="contact-heading-word">
+                      LET&apos;S
+                    </TextReveal>
+                  </span>
+                  <span className="contact-heading-line">
+                    <TextReveal as="span" className="contact-heading-word" delay={0.06}>
+                      MAKE
+                    </TextReveal>
+                  </span>
+                  <span className="contact-heading-line">
+                    <TextReveal as="span" className="contact-heading-word" delay={0.12}>
+                      SOME
+                    </TextReveal>
+                  </span>
+                  <span className="contact-heading-line contact-heading-line--accent">
+                    <motion.span
+                      className="contact-heading-word heading-serif text-accent"
+                      initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+                      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      viewport={{ once: false }}
+                      transition={{ duration: 0.9, delay: 0.18, ease: EASE.outExpo }}
+                    >
+                      NOISE
+                    </motion.span>
+                  </span>
                 </span>
               </h2>
 
@@ -48,7 +70,7 @@ export function Contact() {
 
             <div className="contact-actions max-lg:text-center">
               <Reveal delay={0.35}>
-                <div className="contact-cta-row flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 lg:items-center lg:justify-start">
+                <div className="contact-cta-row flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 lg:flex-nowrap lg:items-center lg:justify-start">
                   <Button
                     href={`mailto:${SITE.email}`}
                     variant="pill3d"
@@ -57,35 +79,34 @@ export function Contact() {
                   >
                     {SITE.ctaLabel}
                   </Button>
-                  <span className="contact-channel-location label-caps inline-flex min-h-11 items-center gap-2.5">
+                  <div className="contact-cta-socials flex shrink-0 items-center gap-3">
+                    <a
+                      href={SITE.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="contact-channel-icon"
+                      data-cursor="hover"
+                      aria-label="LinkedIn"
+                    >
+                      <span className="contact-channel-icon__shine" aria-hidden="true" />
+                      <LinkedInIcon3D />
+                    </a>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="contact-channel-icon"
+                      data-cursor="hover"
+                      aria-label={`WhatsApp ${SITE.phone}`}
+                    >
+                      <span className="contact-channel-icon__shine" aria-hidden="true" />
+                      <WhatsAppIcon3D />
+                    </a>
+                  </div>
+                  <span className="contact-channel-location label-caps inline-flex min-h-11 shrink-0 items-center gap-2.5">
                     <LocationPinIcon3D />
                     {SITE.location}
                   </span>
-                </div>
-
-                <div className="mt-5 flex items-center justify-center gap-4 lg:justify-start">
-                  <a
-                    href={SITE.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="contact-channel-icon"
-                    data-cursor="hover"
-                    aria-label="LinkedIn"
-                  >
-                    <span className="contact-channel-icon__shine" aria-hidden="true" />
-                    <LinkedInIcon3D />
-                  </a>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="contact-channel-icon"
-                    data-cursor="hover"
-                    aria-label={`WhatsApp ${SITE.phone}`}
-                  >
-                    <span className="contact-channel-icon__shine" aria-hidden="true" />
-                    <WhatsAppIcon3D />
-                  </a>
                 </div>
               </Reveal>
             </div>
